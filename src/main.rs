@@ -51,8 +51,11 @@ fn list_todos() -> Result<(), Error> {
         return Ok(());
     }
     
+    println!("📝 Todo List");
+    println!("────────────────────────────");
+    
     for (i, todo) in todos.iter().enumerate() {
-        println!("{}. {}", i + 1, todo.text);
+        println!("{} {}", i + 1, todo.text);
     }
     
     Ok(())
