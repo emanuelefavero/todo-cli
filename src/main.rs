@@ -61,6 +61,29 @@ fn list_todos() -> Result<(), Error> {
     Ok(())
 }
 
+// TIP: This function is similar to `list_todos`, but it shows a `+` plus sign on the newly added todo (the last one) 
+fn list_todos_after_add() -> Result<(), Error> {
+  let todos = read_todos()?;
+
+  if todos.is_empty() {
+      println!("No todos found");
+      return Ok(());
+  }
+
+  println!("📝 Todo List");
+  println!("────────────────────────────");
+
+  for (i, todo) in todos.iter().enumerate() {
+      if i == todos.len() - 1 {
+          println!("{} + {}", i + 1, todo.text); // last todo gets a `+` sign
+      } else {
+          println!("{} {}", i + 1, todo.text);
+      }
+  }
+
+  Ok(())
+}
+
 fn add_todo(text: &str) -> Result<(), Error> {
     let mut todos = read_todos()?;
     
@@ -72,7 +95,8 @@ fn add_todo(text: &str) -> Result<(), Error> {
     println!("Todo added: {}", text);
     
     // Show the updated list of todos
-    list_todos()?;
+    // list_todos()?;
+    list_todos_after_add()?;
     
     Ok(())
 }
