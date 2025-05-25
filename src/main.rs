@@ -64,7 +64,7 @@ fn list_todos() -> Result<(), Error> {
 fn add_todo(text: &str) -> Result<(), Error> {
     let mut todos = read_todos()?;
     
-    todos.insert(0, Todo {
+    todos.push(Todo {
         text: text.to_string(),
     });
     
