@@ -105,7 +105,8 @@ fn print_usage() {
     println!("Usage:");
     println!("  todo - List all todos");
     println!("  todo add \"Todo text\" - Add a new todo");
-    println!("  todo rm <number> - Remove a todo by number");
+    println!("  todo rm - Remove the first todo");
+    println!("  todo rm <number> - Remove a specific todo by number");
 }
 
 fn main() {
@@ -122,6 +123,12 @@ fn main() {
         }
         3 if args[1] == "add" => {
             if let Err(e) = add_todo(&args[2]) {
+                eprintln!("Error: {}", e);
+            }
+        }
+        2 if args[1] == "rm" => {
+            // If no index is provided, remove the first todo
+            if let Err(e) = remove_todo(1) {
                 eprintln!("Error: {}", e);
             }
         }
