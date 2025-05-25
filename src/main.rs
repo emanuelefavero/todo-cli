@@ -71,6 +71,9 @@ fn add_todo(text: &str) -> Result<(), Error> {
     write_todos(&todos)?;
     println!("Todo added: {}", text);
     
+    // Show the updated list of todos
+    list_todos()?;
+    
     Ok(())
 }
 
@@ -87,6 +90,13 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     let todo = todos.remove(index - 1);
     write_todos(&todos)?;
     println!("Todo removed: {}", todo.text);
+    
+    // Show the updated list if there are still todos
+    if !todos.is_empty() {
+        list_todos()?;
+    } else {
+        println!("No todos left");
+    }
     
     Ok(())
 }
