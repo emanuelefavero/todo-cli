@@ -114,7 +114,8 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
     print_todo_list_title();
 
     if todos.is_empty() {
-        println!("-  {}", removed_todo.text); // show the removed todo
+        let removed_todo_row = format!("-  {}", removed_todo.text.strikethrough());
+        println!("{}", removed_todo_row.red()); // show the removed todo
         println!("📋 Empty");
         return Ok(());
     }
@@ -122,7 +123,8 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
     for (i, todo) in todos.iter().enumerate() {
         let status = if todo.done { "✔︎" } else { "☐" };
         if i == index - 1 {
-            println!("- {} {}", status, removed_todo.text); // show the removed todo with a `-` sign
+            let removed_todo_row = format!("- {} {}", status, removed_todo.text.strikethrough());
+            println!("{}", removed_todo_row.red()); // show the removed todo
         }
         if todo.done {
             println!("{}", format!("{} {} {}", i + 1, status, todo.text).green());
