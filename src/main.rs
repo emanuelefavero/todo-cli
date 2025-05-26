@@ -46,14 +46,15 @@ fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
 
 fn list_todos() -> Result<(), Error> {
     let todos = read_todos()?;
+
+    println!("📝 Todo List");
+    println!("────────────────────────────");
     
     if todos.is_empty() {
-        println!("No todos found");
+        println!("📋 Empty");
         return Ok(());
     }
     
-    println!("📝 Todo List");
-    println!("────────────────────────────");
     
     for (i, todo) in todos.iter().enumerate() {
         let status = if todo.done { "✔︎" } else { "☐" };
@@ -67,13 +68,14 @@ fn list_todos() -> Result<(), Error> {
 fn list_todos_after_add() -> Result<(), Error> {
   let todos = read_todos()?;
 
+  println!("📝 Todo List");
+  println!("────────────────────────────");
+
   if todos.is_empty() {
-      println!("No todos found");
+      println!("📋 Empty");
       return Ok(());
   }
 
-  println!("📝 Todo List");
-  println!("────────────────────────────");
 
   for (i, todo) in todos.iter().enumerate() {
       let status = if todo.done { "✔︎" } else { "☐" };
@@ -92,13 +94,14 @@ fn list_todos_after_add() -> Result<(), Error> {
 fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = read_todos()?;
 
+    println!("📝 Todo List");
+    println!("────────────────────────────");
+
     if todos.is_empty() {
-        println!("No todos found");
+        println!("📋 Empty");
         return Ok(());
     }
 
-    println!("📝 Todo List");
-    println!("────────────────────────────");
 
     for (i, todo) in todos.iter().enumerate() {
         let status = if todo.done { "✔︎" } else { "☐" };
@@ -114,16 +117,16 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
 fn clear_todos() -> Result<(), Error> {
     let todos = read_todos()?;
     
+    println!("📝 Todo List");
+    println!("────────────────────────────");
+
     if todos.is_empty() {
-        println!("No todos found");
+        println!("📋 Empty");
         return Ok(());
     }
     
     // Write an empty array to clear all todos
     write_todos(&Vec::new())?;
-    
-    println!("📝 Todo List");
-    println!("────────────────────────────");
     println!("🗑️  All todos cleared");
     
     Ok(())
@@ -164,7 +167,9 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     if !todos.is_empty() {
         list_todos_after_remove(index, &todo)?;
     } else {
-        println!("No todos left");
+      println!("📝 Todo List");
+      println!("────────────────────────────");
+      println!("📋 Empty");
     }
     
     Ok(())
