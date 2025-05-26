@@ -171,15 +171,9 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     write_todos(&todos)?;
     println!("Todo removed: {}", todo.text);
     
-    // Show the updated list with the removed todo if there are still todos left
-    if !todos.is_empty() {
-      list_todos_after_remove(index, &todo)?;
-    } else {
-      println!("📝 Todo List");
-      println!("────────────────────────────");
-      println!("📋 Empty");
-    }
-    
+    // Show the updated list with the removed todo
+    list_todos_after_remove(index, &todo)?;
+
     Ok(())
 }
 
