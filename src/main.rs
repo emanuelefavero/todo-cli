@@ -78,7 +78,7 @@ fn list_todos_after_add() -> Result<(), Error> {
   for (i, todo) in todos.iter().enumerate() {
       let status = if todo.done { "✔︎" } else { "☐" };
       if i == todos.len() - 1 {
-          println!("{} {} + {}", i + 1, status, todo.text); // last todo gets a `+` sign
+          println!("{} + {}", i + 1, todo.text); // last todo gets a `+` sign
       } else {
           println!("{} {} {}", i + 1, status, todo.text);
       }
