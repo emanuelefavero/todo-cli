@@ -52,8 +52,9 @@ fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
 }
 
 fn print_todo_list_title() {
-    println!("📝 Todo List");
-    println!("────────────────────────────");
+    println!(); // Blank line
+    println!("📝 {}", "Todo List".bold());
+    println!("{}", "────────────────────────────".dimmed());
 }
 
 fn list_todos() -> Result<(), Error> {
