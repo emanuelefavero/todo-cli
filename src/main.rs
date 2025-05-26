@@ -202,6 +202,7 @@ fn print_usage() {
     println!("  todo done - Toggle the first todo completion status");
     println!("  todo done <number> - Toggle todo completion status");
     println!("  todo clear - Remove all todos");
+    println!("  todo help - Show this help message");
 }
 
 fn main() {
