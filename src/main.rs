@@ -179,6 +179,14 @@ fn remove_todo(index: usize) -> Result<(), Error> {
 
 fn toggle_done(index: usize) -> Result<(), Error> {
     let mut todos = read_todos()?;
+
+    // Check if the todo list is empty first
+    if todos.is_empty() {
+        println!("📝 Todo List");
+        println!("────────────────────────────");
+        println!("📋 Empty");
+        return Ok(());
+    }
     
     if index == 0 || index > todos.len() {
         return Err(Error::new(
