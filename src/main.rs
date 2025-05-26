@@ -1,3 +1,4 @@
+use colored::Colorize;
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::fs;
@@ -67,7 +68,13 @@ fn list_todos() -> Result<(), Error> {
 
     for (i, todo) in todos.iter().enumerate() {
         let status = if todo.done { "✔︎" } else { "☐" };
-        println!("{} {} {}", i + 1, status, todo.text);
+        let todo_row = format!("{} {} {}", i + 1, status, todo.text);
+
+        if todo.done {
+            println!("{}", todo_row.green()); // Print done todos in green
+        } else {
+            println!("{}", todo_row);
+        }
     }
 
     Ok(())
@@ -88,6 +95,8 @@ fn list_todos_after_add() -> Result<(), Error> {
         let status = if todo.done { "✔︎" } else { "☐" };
         if i == todos.len() - 1 {
             println!("{} + {}", i + 1, todo.text); // last todo gets a `+` sign
+        } else if todo.done {
+            println!("{}", format!("{} {} {}", i + 1, status, todo.text).green());
         } else {
             println!("{} {} {}", i + 1, status, todo.text);
         }
@@ -114,7 +123,11 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
         if i == index - 1 {
             println!("- {} {}", status, removed_todo.text); // show the removed todo with a `-` sign
         }
-        println!("{} {} {}", i + 1, status, todo.text);
+        if todo.done {
+            println!("{}", format!("{} {} {}", i + 1, status, todo.text).green());
+        } else {
+            println!("{} {} {}", i + 1, status, todo.text);
+        }
     }
 
     Ok(())
