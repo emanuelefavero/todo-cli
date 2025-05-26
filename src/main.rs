@@ -107,6 +107,24 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
     Ok(())
 }
 
+fn clear_todos() -> Result<(), Error> {
+    let todos = read_todos()?;
+    
+    if todos.is_empty() {
+        println!("No todos found");
+        return Ok(());
+    }
+    
+    // Write an empty array to clear all todos
+    write_todos(&Vec::new())?;
+    
+    println!("📝 Todo List");
+    println!("────────────────────────────");
+    println!("🗑️ All todos cleared");
+    
+    Ok(())
+}
+
 fn add_todo(text: &str) -> Result<(), Error> {
     let mut todos = read_todos()?;
     
@@ -153,6 +171,7 @@ fn print_usage() {
     println!("  todo add \"Todo text\" - Add a new todo");
     println!("  todo rm - Remove the first todo");
     println!("  todo rm <number> - Remove a specific todo by number");
+    println!("  todo clear - Remove all todos");
 }
 
 fn main() {
@@ -166,6 +185,11 @@ fn main() {
         }
         2 if args[1] == "help" => {
             print_usage();
+        }
+        2 if args[1] == "clear" => {
+            if let Err(e) = clear_todos() {
+                eprintln!("Error: {}", e);
+            }
         }
         3 if args[1] == "add" => {
             if let Err(e) = add_todo(&args[2]) {
