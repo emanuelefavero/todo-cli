@@ -7,6 +7,7 @@ use std::path::PathBuf;
 #[derive(Serialize, Deserialize, Debug)]
 struct Todo {
     text: String,
+    done: bool,
 }
 
 fn get_todo_file_path() -> PathBuf {
@@ -55,7 +56,8 @@ fn list_todos() -> Result<(), Error> {
     println!("────────────────────────────");
     
     for (i, todo) in todos.iter().enumerate() {
-        println!("{} {}", i + 1, todo.text);
+        let status = if todo.done { "✔︎" } else { "☐" };
+        println!("{} {} {}", i + 1, status, todo.text);
     }
     
     Ok(())
@@ -74,10 +76,11 @@ fn list_todos_after_add() -> Result<(), Error> {
   println!("────────────────────────────");
 
   for (i, todo) in todos.iter().enumerate() {
+      let status = if todo.done { "✔︎" } else { "☐" };
       if i == todos.len() - 1 {
-          println!("{} + {}", i + 1, todo.text); // last todo gets a `+` sign
+          println!("{} {} + {}", i + 1, status, todo.text); // last todo gets a `+` sign
       } else {
-          println!("{} {}", i + 1, todo.text);
+          println!("{} {} {}", i + 1, status, todo.text);
       }
   }
 
@@ -101,7 +104,8 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
         if i == index - 1 {
             println!("- {}", removed_todo.text); // show the removed todo with a `-` sign
         }
-        println!("{} {}", i + 1, todo.text);
+        let status = if todo.done { "✔︎" } else { "☐" };
+        println!("{} {} {}", i + 1, status, todo.text);
     }
 
     Ok(())
@@ -130,6 +134,7 @@ fn add_todo(text: &str) -> Result<(), Error> {
     
     todos.push(Todo {
         text: text.to_string(),
+        done: false,
     });
     
     write_todos(&todos)?;
@@ -165,12 +170,36 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     Ok(())
 }
 
+fn toggle_done(index: usize) -> Result<(), Error> {
+    let mut todos = read_todos()?;
+    
+    if index == 0 || index > todos.len() {
+        return Err(Error::new(
+            ErrorKind::InvalidInput,
+            format!("Invalid todo number: {}", index),
+        ));
+    }
+    
+    // Toggle the done status
+    todos[index - 1].done = !todos[index - 1].done;
+    let status = if todos[index - 1].done { "done" } else { "not done" };
+    
+    write_todos(&todos)?;
+    println!("Todo marked as {}: {}", status, todos[index - 1].text);
+    
+    // Show the updated list
+    list_todos()?;
+    
+    Ok(())
+}
+
 fn print_usage() {
     println!("Usage:");
     println!("  todo - List all todos");
     println!("  todo add \"Todo text\" - Add a new todo");
     println!("  todo rm - Remove the first todo");
     println!("  todo rm <number> - Remove a specific todo by number");
+    println!("  todo done <number> - Toggle todo completion status");
     println!("  todo clear - Remove all todos");
 }
 
@@ -206,6 +235,18 @@ fn main() {
             match args[2].parse::<usize>() {
                 Ok(index) => {
                     if let Err(e) = remove_todo(index) {
+                        eprintln!("Error: {}", e);
+                    }
+                }
+                Err(_) => {
+                    eprintln!("Invalid number: {}", args[2]);
+                }
+            }
+        }
+        3 if args[1] == "done" => {
+            match args[2].parse::<usize>() {
+                Ok(index) => {
+                    if let Err(e) = toggle_done(index) {
                         eprintln!("Error: {}", e);
                     }
                 }
