@@ -122,15 +122,28 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
 
     for (i, todo) in todos.iter().enumerate() {
         let status = if todo.done { "✔︎" } else { "☐" };
+
+        // Show removed todo after the todo at its previous position
         if i == index - 1 {
-            let removed_todo_row = format!("- {} {}", status, removed_todo.text.strikethrough());
+            let removed_status = if removed_todo.done { "✔︎" } else { "☐" };
+            let removed_todo_row =
+                format!("- {} {}", removed_status, removed_todo.text.strikethrough());
             println!("{}", removed_todo_row.red()); // show the removed todo
         }
+
         if todo.done {
             println!("{}", format!("{} {} {}", i + 1, status, todo.text).green());
         } else {
             println!("{} {} {}", i + 1, status, todo.text);
         }
+    }
+
+    // If the removed todo was the last one, show it at the end
+    if index == todos.len() + 1 {
+        let removed_status = if removed_todo.done { "✔︎" } else { "☐" };
+        let removed_todo_row =
+            format!("- {} {}", removed_status, removed_todo.text.strikethrough());
+        println!("{}", removed_todo_row.red()); // show the removed todo at the end
     }
 
     Ok(())
