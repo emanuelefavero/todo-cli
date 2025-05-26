@@ -87,6 +87,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+## Resources
+
+- [Rust](https://www.rust-lang.org/)
+- [Colored Rust Library](https://github.com/colored-rs/colored)
+- [Serde Rust JSON Library](https://serde.rs/)
+- [dirs Rust Library](https://crates.io/crates/dirs)
+
 ## License
 
 - [MIT](LICENSE.md)
