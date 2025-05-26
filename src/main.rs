@@ -44,11 +44,15 @@ fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
     Ok(())
 }
 
+fn print_todo_list_title() {
+    println!("📝 Todo List");
+    println!("────────────────────────────");
+}
+
 fn list_todos() -> Result<(), Error> {
     let todos = read_todos()?;
 
-    println!("📝 Todo List");
-    println!("────────────────────────────");
+    print_todo_list_title();
     
     if todos.is_empty() {
         println!("📋 Empty");
@@ -68,8 +72,7 @@ fn list_todos() -> Result<(), Error> {
 fn list_todos_after_add() -> Result<(), Error> {
   let todos = read_todos()?;
 
-  println!("📝 Todo List");
-  println!("────────────────────────────");
+  print_todo_list_title();
 
   if todos.is_empty() {
       println!("📋 Empty");
@@ -94,8 +97,7 @@ fn list_todos_after_add() -> Result<(), Error> {
 fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = read_todos()?;
 
-    println!("📝 Todo List");
-    println!("────────────────────────────");
+    print_todo_list_title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -117,8 +119,7 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
 fn clear_todos() -> Result<(), Error> {
     let todos = read_todos()?;
     
-    println!("📝 Todo List");
-    println!("────────────────────────────");
+    print_todo_list_title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -154,8 +155,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     
     // Check if the todo list is empty first
     if todos.is_empty() {
-        println!("📝 Todo List");
-        println!("────────────────────────────");
+        print_todo_list_title();
         println!("📋 Empty");
         return Ok(());
     }
@@ -182,8 +182,7 @@ fn toggle_done(index: usize) -> Result<(), Error> {
 
     // Check if the todo list is empty first
     if todos.is_empty() {
-        println!("📝 Todo List");
-        println!("────────────────────────────");
+        print_todo_list_title();
         println!("📋 Empty");
         return Ok(());
     }
