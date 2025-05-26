@@ -120,7 +120,7 @@ fn clear_todos() -> Result<(), Error> {
     
     println!("📝 Todo List");
     println!("────────────────────────────");
-    println!("🗑️ All todos cleared");
+    println!("🗑️  All todos cleared");
     
     Ok(())
 }
