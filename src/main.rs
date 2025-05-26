@@ -100,6 +100,7 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
     print_todo_list_title();
 
     if todos.is_empty() {
+        println!("-  {}", removed_todo.text); // show the removed todo
         println!("📋 Empty");
         return Ok(());
     }
