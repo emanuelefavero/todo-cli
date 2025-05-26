@@ -84,6 +84,29 @@ fn list_todos_after_add() -> Result<(), Error> {
   Ok(())
 }
 
+// This function is similar to `list_todos`, but it shows the removed todo (with a `-` minus sign instead of its number) between the previous and next todo
+
+fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Error> {
+    let todos = read_todos()?;
+
+    if todos.is_empty() {
+        println!("No todos found");
+        return Ok(());
+    }
+
+    println!("📝 Todo List");
+    println!("────────────────────────────");
+
+    for (i, todo) in todos.iter().enumerate() {
+        if i == index - 1 {
+            println!("- {}", removed_todo.text); // show the removed todo with a `-` sign
+        }
+        println!("{} {}", i + 1, todo.text);
+    }
+
+    Ok(())
+}
+
 fn add_todo(text: &str) -> Result<(), Error> {
     let mut todos = read_todos()?;
     
@@ -94,8 +117,7 @@ fn add_todo(text: &str) -> Result<(), Error> {
     write_todos(&todos)?;
     println!("Todo added: {}", text);
     
-    // Show the updated list of todos
-    // list_todos()?;
+    // Show the updated list with the new todo
     list_todos_after_add()?;
     
     Ok(())
@@ -115,9 +137,9 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     write_todos(&todos)?;
     println!("Todo removed: {}", todo.text);
     
-    // Show the updated list if there are still todos
+    // Show the updated list with the removed todo if there are still todos left
     if !todos.is_empty() {
-        list_todos()?;
+        list_todos_after_remove(index, &todo)?;
     } else {
         println!("No todos left");
     }
