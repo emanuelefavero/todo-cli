@@ -152,6 +152,14 @@ fn add_todo(text: &str) -> Result<(), Error> {
 fn remove_todo(index: usize) -> Result<(), Error> {
     let mut todos = read_todos()?;
     
+    // Check if the todo list is empty first
+    if todos.is_empty() {
+        println!("📝 Todo List");
+        println!("────────────────────────────");
+        println!("📋 Empty");
+        return Ok(());
+    }
+    
     if index == 0 || index > todos.len() {
         return Err(Error::new(
             ErrorKind::InvalidInput,
@@ -165,7 +173,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     
     // Show the updated list with the removed todo if there are still todos left
     if !todos.is_empty() {
-        list_todos_after_remove(index, &todo)?;
+      list_todos_after_remove(index, &todo)?;
     } else {
       println!("📝 Todo List");
       println!("────────────────────────────");
