@@ -199,6 +199,7 @@ fn print_usage() {
     println!("  todo add \"Todo text\" - Add a new todo");
     println!("  todo rm - Remove the first todo");
     println!("  todo rm <number> - Remove a specific todo by number");
+    println!("  todo done - Toggle the first todo completion status");
     println!("  todo done <number> - Toggle todo completion status");
     println!("  todo clear - Remove all todos");
 }
@@ -241,6 +242,12 @@ fn main() {
                 Err(_) => {
                     eprintln!("Invalid number: {}", args[2]);
                 }
+            }
+        }
+        2 if args[1] == "done" => {
+            // If no index is provided, toggle the first todo
+            if let Err(e) = toggle_done(1) {
+                eprintln!("Error: {}", e);
             }
         }
         3 if args[1] == "done" => {
