@@ -101,10 +101,10 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
     println!("────────────────────────────");
 
     for (i, todo) in todos.iter().enumerate() {
-        if i == index - 1 {
-            println!("- {}", removed_todo.text); // show the removed todo with a `-` sign
-        }
         let status = if todo.done { "✔︎" } else { "☐" };
+        if i == index - 1 {
+            println!("- {} {}", status, removed_todo.text); // show the removed todo with a `-` sign
+        }
         println!("{} {} {}", i + 1, status, todo.text);
     }
 
