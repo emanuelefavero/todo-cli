@@ -119,3 +119,32 @@ pub fn remove(index: usize) -> Result<(), Error> {
 
     Ok(())
 }
+
+// * Toggles the done status of a todo by index
+pub fn toggle_done(index: usize) -> Result<(), Error> {
+    let mut todos = read()?;
+
+    // Check if the todo list is empty first
+    if todos.is_empty() {
+        view::todos::title();
+        println!("📋 Empty");
+        return Ok(());
+    }
+
+    if index == 0 || index > todos.len() {
+        return Err(Error::new(
+            ErrorKind::InvalidInput,
+            format!("Invalid todo number: {}", index),
+        ));
+    }
+
+    // Toggle the done status
+    todos[index - 1].done = !todos[index - 1].done;
+
+    write(&todos)?;
+
+    // Show the updated list
+    view::todos::toggled(index)?;
+
+    Ok(())
+}

@@ -1,38 +1,9 @@
 use std::env;
-use std::io::{Error, ErrorKind};
 
 mod data;
 mod models;
 mod utils;
 mod view;
-
-fn toggle_done(index: usize) -> Result<(), Error> {
-    let mut todos = data::todos::read()?;
-
-    // Check if the todo list is empty first
-    if todos.is_empty() {
-        view::todos::title();
-        println!("📋 Empty");
-        return Ok(());
-    }
-
-    if index == 0 || index > todos.len() {
-        return Err(Error::new(
-            ErrorKind::InvalidInput,
-            format!("Invalid todo number: {}", index),
-        ));
-    }
-
-    // Toggle the done status
-    todos[index - 1].done = !todos[index - 1].done;
-
-    data::todos::write(&todos)?;
-
-    // Show the updated list
-    view::todos::toggled(index)?;
-
-    Ok(())
-}
 
 fn print_usage() {
     println!("Usage:");
@@ -86,13 +57,13 @@ fn main() {
         },
         2 if args[1] == "done" => {
             // If no index is provided, toggle the first todo
-            if let Err(e) = toggle_done(1) {
+            if let Err(e) = data::todos::toggle_done(1) {
                 eprintln!("Error: {}", e);
             }
         }
         3 if args[1] == "done" => match args[2].parse::<usize>() {
             Ok(index) => {
-                if let Err(e) = toggle_done(index) {
+                if let Err(e) = data::todos::toggle_done(index) {
                     eprintln!("Error: {}", e);
                 }
             }
