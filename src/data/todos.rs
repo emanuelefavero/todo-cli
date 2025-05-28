@@ -94,7 +94,7 @@ pub fn add(text: &str) -> Result<(), Error> {
 }
 
 // * Removes a todo from the list by index
-pub fn remove_todo(index: usize) -> Result<(), Error> {
+pub fn remove(index: usize) -> Result<(), Error> {
     let mut todos = read()?;
 
     // Check if the todo list is empty first

@@ -70,13 +70,13 @@ fn main() {
         }
         2 if args[1] == "rm" => {
             // If no index is provided, remove the first todo
-            if let Err(e) = data::todos::remove_todo(1) {
+            if let Err(e) = data::todos::remove(1) {
                 eprintln!("Error: {}", e);
             }
         }
         3 if args[1] == "rm" => match args[2].parse::<usize>() {
             Ok(index) => {
-                if let Err(e) = data::todos::remove_todo(index) {
+                if let Err(e) = data::todos::remove(index) {
                     eprintln!("Error: {}", e);
                 }
             }
