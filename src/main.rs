@@ -67,9 +67,22 @@ fn list_todos() -> Result<(), Error> {
         return Ok(());
     }
 
+    // Check if we have 10 or more todos to determine padding of first 9 todos
+    let length = todos.len();
+
     for (i, todo) in todos.iter().enumerate() {
+        let index = i + 1;
         let status = if todo.done { "✔︎" } else { "☐" };
-        let todo_row = format!("{} {} {}", i + 1, status, todo.text);
+
+        // If there are more than 9 todos and the index is less than 10, we add padding
+        let need_padding = length >= 10 && index < 10;
+        let formatted_index = if need_padding {
+            format!(" {}", index) // Index with left padding
+        } else {
+            index.to_string() // No padding needed
+        };
+
+        let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
 
         if todo.done {
             println!("{}", todo_row.green()); // Print done todos in green
