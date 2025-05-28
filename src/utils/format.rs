@@ -1,4 +1,4 @@
-// Returns a formatted index string with left padding if needed
+// * Returns a formatted index string with left padding if needed
 pub fn format_index(index: usize, length: usize) -> String {
     let need_padding = length >= 10 && index < 10;
 

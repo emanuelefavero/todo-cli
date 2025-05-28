@@ -4,7 +4,7 @@ use colored::Colorize;
 
 use crate::data;
 use crate::models::todo::Todo;
-use crate::utils::format::format_index;
+use crate::utils;
 
 // * Show the title of the todo list
 pub fn title() {
@@ -32,7 +32,7 @@ pub fn all() -> Result<(), Error> {
         let status = if todo.done { "✔︎" } else { "☐" };
 
         // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = format_index(index, length);
+        let formatted_index = utils::format::format_index(index, length);
 
         let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
 
@@ -64,7 +64,7 @@ pub fn added() -> Result<(), Error> {
         let status = if todo.done { "✔︎" } else { "☐" };
 
         // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = format_index(index, length);
+        let formatted_index = utils::format::format_index(index, length);
 
         if i == todos.len() - 1 {
             let todo_row = format!("{} + {}", formatted_index, todo.text);
@@ -104,7 +104,7 @@ pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
         let status = if todo.done { "✔︎" } else { "☐" };
 
         // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = format_index(todo_index, length);
+        let formatted_index = utils::format::format_index(todo_index, length);
 
         // Show removed todo after the todo at its previous position
         if i == index - 1 {
@@ -166,7 +166,7 @@ pub fn toggled(index: usize) -> Result<(), Error> {
         let status = if todo.done { "✔︎" } else { "☐" };
 
         // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = format_index(todo_index, length);
+        let formatted_index = utils::format::format_index(todo_index, length);
 
         let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
 

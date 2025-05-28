@@ -15,7 +15,7 @@ fn main() {
             }
         }
         2 if args[1] == "help" => {
-            view::help::print_usage();
+            view::help::usage();
         }
         2 if args[1] == "clear" => {
             if let Err(e) = data::todos::clear() {
@@ -61,7 +61,7 @@ fn main() {
         },
         _ => {
             eprintln!("Invalid command");
-            view::help::print_usage();
+            view::help::usage();
         }
     }
 }

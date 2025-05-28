@@ -1,5 +1,5 @@
 // * Show the app usage instructions
-pub fn print_usage() {
+pub fn usage() {
     println!("Usage:");
     println!("  todo - List all todos");
     println!("  todo add \"Todo text\" - Add a new todo");
