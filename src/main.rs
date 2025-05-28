@@ -14,7 +14,7 @@ use utils::format::format_index;
 
 mod view;
 
-// TIP: This function is similar to `list_todos`, but it shows a `+` plus sign on the newly added todo (the last one)
+// TIP: This function is similar to `all`, but it shows a `+` plus sign on the newly added todo (the last one)
 fn list_todos_after_add() -> Result<(), Error> {
     let todos = read_todos()?;
 
@@ -50,7 +50,7 @@ fn list_todos_after_add() -> Result<(), Error> {
     Ok(())
 }
 
-// This function is similar to `list_todos`, but it shows the removed todo (with a `-` minus sign instead of its number) between the previous and next todo
+// This function is similar to `all`, but it shows the removed todo (with a `-` minus sign instead of its number) between the previous and next todo
 
 fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = read_todos()?;
@@ -116,7 +116,7 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
     Ok(())
 }
 
-// This function is similar to `list_todos`, but it shows the toggled todo with a special message after the todo text so users can directly see which todo was toggled
+// This function is similar to `all`, but it shows the toggled todo with a special message after the todo text so users can directly see which todo was toggled
 fn list_todos_after_toggle(index: usize) -> Result<(), Error> {
     let todos = read_todos()?;
 
@@ -262,7 +262,7 @@ fn main() {
 
     match args.len() {
         1 => {
-            if let Err(e) = view::todos::list_todos() {
+            if let Err(e) = view::todos::all() {
                 eprintln!("Error: {}", e);
             }
         }

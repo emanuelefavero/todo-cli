@@ -11,7 +11,7 @@ pub fn title() {
     println!("{}", "────────────────────────────".dimmed());
 }
 
-pub fn list_todos() -> Result<(), Error> {
+pub fn all() -> Result<(), Error> {
     let todos = read_todos()?;
 
     title();
