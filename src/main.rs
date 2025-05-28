@@ -6,8 +6,10 @@ mod utils;
 mod view;
 
 fn main() {
+    // * Collect command line arguments into a vector
     let args: Vec<String> = env::args().collect();
 
+    // * Command line argument handler
     match args.len() {
         1 => {
             if let Err(e) = view::todos::all() {
