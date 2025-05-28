@@ -3,6 +3,7 @@ use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
 use crate::models::todo::Todo;
+use crate::view;
 
 // 🔒 PRIVATE ---------------------------------
 
@@ -54,5 +55,23 @@ pub fn write(todos: &Vec<Todo>) -> Result<(), Error> {
     })?;
 
     fs::write(path, content)?;
+    Ok(())
+}
+
+// * Clears all todos from the list
+pub fn clear_todos() -> Result<(), Error> {
+    let todos = read()?;
+
+    view::todos::title();
+
+    if todos.is_empty() {
+        println!("📋 Empty");
+        return Ok(());
+    }
+
+    // Write an empty array to clear all todos
+    write(&Vec::new())?;
+    println!("🗑️  All todos cleared");
+
     Ok(())
 }

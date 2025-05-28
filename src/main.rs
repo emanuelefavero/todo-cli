@@ -7,23 +7,6 @@ use models::todo::Todo;
 mod utils;
 mod view;
 
-fn clear_todos() -> Result<(), Error> {
-    let todos = data::todos::read()?;
-
-    view::todos::title();
-
-    if todos.is_empty() {
-        println!("📋 Empty");
-        return Ok(());
-    }
-
-    // Write an empty array to clear all todos
-    data::todos::write(&Vec::new())?;
-    println!("🗑️  All todos cleared");
-
-    Ok(())
-}
-
 fn add_todo(text: &str) -> Result<(), Error> {
     let mut todos = data::todos::read()?;
 
@@ -119,7 +102,7 @@ fn main() {
             print_usage();
         }
         2 if args[1] == "clear" => {
-            if let Err(e) = clear_todos() {
+            if let Err(e) = data::todos::clear_todos() {
                 eprintln!("Error: {}", e);
             }
         }
