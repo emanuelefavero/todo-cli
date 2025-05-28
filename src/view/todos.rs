@@ -12,6 +12,7 @@ pub fn title() {
     println!("{}", "────────────────────────────".dimmed());
 }
 
+// * Show all todos in the list
 pub fn all() -> Result<(), Error> {
     let todos = read_todos()?;
 
@@ -44,7 +45,7 @@ pub fn all() -> Result<(), Error> {
     Ok(())
 }
 
-// TIP: This function is similar to `all`, but it shows a `+` plus sign on the newly added todo (the last one)
+// * Show the newly added todo after adding it to the list
 pub fn list_todos_after_add() -> Result<(), Error> {
     let todos = read_todos()?;
 
@@ -80,8 +81,7 @@ pub fn list_todos_after_add() -> Result<(), Error> {
     Ok(())
 }
 
-// This function is similar to `all`, but it shows the removed todo (with a `-` minus sign instead of its number) between the previous and next todo
-
+// * Show the removed todo after removing it from the list
 pub fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = read_todos()?;
 
@@ -146,7 +146,7 @@ pub fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), 
     Ok(())
 }
 
-// This function is similar to `all`, but it shows the toggled todo with a special message after the todo text so users can directly see which todo was toggled
+// * Show the toggled todo (done/undone) after toggling its status
 pub fn list_todos_after_toggle(index: usize) -> Result<(), Error> {
     let todos = read_todos()?;
 
