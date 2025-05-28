@@ -112,7 +112,7 @@ fn list_todos_after_add() -> Result<(), Error> {
         let status = if todo.done { "✔︎" } else { "☐" };
 
         // If there are more than 9 todos and the index is less than 10, we add padding
-        let need_padding = length >= 10 && i < 9;
+        let need_padding = length >= 10 && index < 10;
         let formatted_index = if need_padding {
             format!(" {}", index) // Index with left padding
         } else {
