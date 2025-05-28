@@ -262,7 +262,6 @@ fn add_todo(text: &str) -> Result<(), Error> {
     });
 
     write_todos(&todos)?;
-    println!("Todo added: {}", text);
 
     // Show the updated list with the new todo
     list_todos_after_add()?;
@@ -289,7 +288,6 @@ fn remove_todo(index: usize) -> Result<(), Error> {
 
     let todo = todos.remove(index - 1);
     write_todos(&todos)?;
-    println!("Todo removed: {}", todo.text);
 
     // Show the updated list with the removed todo
     list_todos_after_remove(index, &todo)?;
@@ -316,14 +314,8 @@ fn toggle_done(index: usize) -> Result<(), Error> {
 
     // Toggle the done status
     todos[index - 1].done = !todos[index - 1].done;
-    let status = if todos[index - 1].done {
-        "done"
-    } else {
-        "not done"
-    };
 
     write_todos(&todos)?;
-    println!("Todo marked as {}: {}", status, todos[index - 1].text);
 
     // Show the updated list
     list_todos_after_toggle(index)?;
