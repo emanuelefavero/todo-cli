@@ -92,3 +92,30 @@ pub fn add(text: &str) -> Result<(), Error> {
 
     Ok(())
 }
+
+// * Removes a todo from the list by index
+pub fn remove_todo(index: usize) -> Result<(), Error> {
+    let mut todos = read()?;
+
+    // Check if the todo list is empty first
+    if todos.is_empty() {
+        view::todos::title();
+        println!("📋 Empty");
+        return Ok(());
+    }
+
+    if index == 0 || index > todos.len() {
+        return Err(Error::new(
+            ErrorKind::InvalidInput,
+            format!("Invalid todo number: {}", index),
+        ));
+    }
+
+    let todo = todos.remove(index - 1);
+    write(&todos)?;
+
+    // Show the updated list with the removed todo
+    view::todos::removed(index, &todo)?;
+
+    Ok(())
+}

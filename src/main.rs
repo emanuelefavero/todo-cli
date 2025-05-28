@@ -6,32 +6,6 @@ mod models;
 mod utils;
 mod view;
 
-fn remove_todo(index: usize) -> Result<(), Error> {
-    let mut todos = data::todos::read()?;
-
-    // Check if the todo list is empty first
-    if todos.is_empty() {
-        view::todos::title();
-        println!("📋 Empty");
-        return Ok(());
-    }
-
-    if index == 0 || index > todos.len() {
-        return Err(Error::new(
-            ErrorKind::InvalidInput,
-            format!("Invalid todo number: {}", index),
-        ));
-    }
-
-    let todo = todos.remove(index - 1);
-    data::todos::write(&todos)?;
-
-    // Show the updated list with the removed todo
-    view::todos::removed(index, &todo)?;
-
-    Ok(())
-}
-
 fn toggle_done(index: usize) -> Result<(), Error> {
     let mut todos = data::todos::read()?;
 
@@ -96,13 +70,13 @@ fn main() {
         }
         2 if args[1] == "rm" => {
             // If no index is provided, remove the first todo
-            if let Err(e) = remove_todo(1) {
+            if let Err(e) = data::todos::remove_todo(1) {
                 eprintln!("Error: {}", e);
             }
         }
         3 if args[1] == "rm" => match args[2].parse::<usize>() {
             Ok(index) => {
-                if let Err(e) = remove_todo(index) {
+                if let Err(e) = data::todos::remove_todo(index) {
                     eprintln!("Error: {}", e);
                 }
             }
