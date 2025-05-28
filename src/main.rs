@@ -5,6 +5,9 @@ use std::path::PathBuf;
 
 use colored::Colorize;
 
+mod data;
+use data::todos::read_todos;
+
 mod models;
 use models::todo::Todo;
 
@@ -20,25 +23,6 @@ fn get_todo_file_path() -> PathBuf {
     fs::create_dir_all(&path).expect("Could not create directory");
     path.push("todos.json");
     path
-}
-
-fn read_todos() -> Result<Vec<Todo>, Error> {
-    let path = get_todo_file_path();
-
-    if !path.exists() {
-        fs::write(&path, "[]").expect("Could not create todo file");
-        return Ok(Vec::new());
-    }
-
-    let content = fs::read_to_string(&path)?;
-    let todos: Vec<Todo> = serde_json::from_str(&content).map_err(|e| {
-        Error::new(
-            ErrorKind::InvalidData,
-            format!("Could not parse todos: {}", e),
-        )
-    })?;
-
-    Ok(todos)
 }
 
 fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
