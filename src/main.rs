@@ -105,15 +105,30 @@ fn list_todos_after_add() -> Result<(), Error> {
         return Ok(());
     }
 
+    let length = todos.len();
+
     for (i, todo) in todos.iter().enumerate() {
+        let index = i + 1;
         let status = if todo.done { "✔︎" } else { "☐" };
+
+        // If there are more than 9 todos and the index is less than 10, we add padding
+        let need_padding = length >= 10 && i < 9;
+        let formatted_index = if need_padding {
+            format!(" {}", index) // Index with left padding
+        } else {
+            index.to_string() // No padding needed
+        };
+
         if i == todos.len() - 1 {
-            let todo_row = format!("{} + {}", i + 1, todo.text);
+            let todo_row = format!("{} + {}", formatted_index, todo.text);
             println!("{}", todo_row.blue()); // print last todo
         } else if todo.done {
-            println!("{}", format!("{} {} {}", i + 1, status, todo.text).green());
+            println!(
+                "{}",
+                format!("{} {} {}", formatted_index, status, todo.text).green()
+            );
         } else {
-            println!("{} {} {}", i + 1, status, todo.text);
+            println!("{} {} {}", formatted_index, status, todo.text);
         }
     }
 
