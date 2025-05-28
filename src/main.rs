@@ -1,18 +1,15 @@
-use colored::Colorize;
-use serde::{Deserialize, Serialize};
 use std::env;
 use std::fs;
 use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
-mod utils; // Import the utils module 
-use utils::*;
+use colored::Colorize;
 
-#[derive(Serialize, Deserialize, Debug)]
-struct Todo {
-    text: String,
-    done: bool,
-}
+mod models;
+use models::todo::Todo;
+
+mod utils;
+use utils::format::format_index;
 
 fn get_todo_file_path() -> PathBuf {
     let mut path = dirs::home_dir().expect("Could not find home directory");
