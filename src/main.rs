@@ -143,35 +143,63 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
     print_todo_list_title();
 
     if todos.is_empty() {
+        // Add padding to the removed todo row if needed
         let removed_todo_row = format!("-  {}", removed_todo.text.strikethrough());
         println!("{}", removed_todo_row.red()); // show the removed todo
         println!("📋 Empty");
         return Ok(());
     }
 
+    // Check if we have 10 or more todos to determine padding of first 9 todos
+    let length = todos.len();
+
     for (i, todo) in todos.iter().enumerate() {
+        let todo_index = i + 1;
         let status = if todo.done { "✔︎" } else { "☐" };
+
+        // If there are more than 9 todos and the index is less than 10, we add padding
+        let need_padding = length >= 10 && todo_index < 10;
+        let formatted_index = if need_padding {
+            format!(" {}", todo_index) // Index with left padding
+        } else {
+            todo_index.to_string() // No padding needed
+        };
 
         // Show removed todo after the todo at its previous position
         if i == index - 1 {
             let removed_status = if removed_todo.done { "✔︎" } else { "☐" };
-            let removed_todo_row =
-                format!("- {} {}", removed_status, removed_todo.text.strikethrough());
+            // Add padding to the removed todo row if there are 10 or more todos
+            let removed_todo_padding = if length >= 10 { " " } else { "" };
+            let removed_todo_row = format!(
+                "{}- {} {}",
+                removed_todo_padding,
+                removed_status,
+                removed_todo.text.strikethrough()
+            );
             println!("{}", removed_todo_row.red()); // show the removed todo
         }
 
         if todo.done {
-            println!("{}", format!("{} {} {}", i + 1, status, todo.text).green());
+            println!(
+                "{}",
+                format!("{} {} {}", formatted_index, status, todo.text).green()
+            );
         } else {
-            println!("{} {} {}", i + 1, status, todo.text);
+            println!("{} {} {}", formatted_index, status, todo.text);
         }
     }
 
     // If the removed todo was the last one, show it at the end
     if index == todos.len() + 1 {
         let removed_status = if removed_todo.done { "✔︎" } else { "☐" };
-        let removed_todo_row =
-            format!("- {} {}", removed_status, removed_todo.text.strikethrough());
+        // Add padding to the removed todo row if there are 10 or more todos
+        let removed_todo_padding = if length >= 10 { " " } else { "" };
+        let removed_todo_row = format!(
+            "{}- {} {}",
+            removed_todo_padding,
+            removed_status,
+            removed_todo.text.strikethrough()
+        );
         println!("{}", removed_todo_row.red()); // show the removed todo at the end
     }
 
