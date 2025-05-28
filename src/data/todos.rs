@@ -5,17 +5,23 @@ use std::path::PathBuf;
 use crate::models::todo::Todo;
 
 // ? Utility function to get the path to the todo file
-fn get_todo_file_path() -> PathBuf {
+fn file_path() -> PathBuf {
+    // Get the home directory
     let mut path = dirs::home_dir().expect("Could not find home directory");
+
+    // NOTE: Choose the directory where the todo file will be stored
     path.push(".todo");
-    fs::create_dir_all(&path).expect("Could not create directory");
-    path.push("todos.json");
-    path
+
+    // Create the directory if it doesn't exist
+    fs::create_dir_all(&path).expect("Could not create directory: .todo/");
+
+    path.push("todos.json"); // Append the filename to the path
+    path // Return the full path to the todo file
 }
 
 // * Reads todos from a JSON file
 pub fn read() -> Result<Vec<Todo>, Error> {
-    let path = get_todo_file_path();
+    let path = file_path();
 
     if !path.exists() {
         fs::write(&path, "[]").expect("Could not create todo file");
@@ -35,7 +41,7 @@ pub fn read() -> Result<Vec<Todo>, Error> {
 
 // * Writes todos to a JSON file
 pub fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
-    let path = get_todo_file_path();
+    let path = file_path();
     let content = serde_json::to_string_pretty(todos).map_err(|e| {
         Error::new(
             ErrorKind::InvalidData,
