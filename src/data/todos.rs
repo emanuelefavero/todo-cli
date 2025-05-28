@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 use crate::models::todo::Todo;
 
-// ? Utility function to get the path to the todo file
+// ? Creates the file path for the todo file
 fn file_path() -> PathBuf {
     // Get the home directory
     let mut path = dirs::home_dir().expect("Could not find home directory");
