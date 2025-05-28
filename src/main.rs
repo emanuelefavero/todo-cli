@@ -14,38 +14,6 @@ use utils::format::format_index;
 
 mod view;
 
-fn list_todos() -> Result<(), Error> {
-    let todos = read_todos()?;
-
-    view::todos::title();
-
-    if todos.is_empty() {
-        println!("📋 Empty");
-        return Ok(());
-    }
-
-    // Check if we have 10 or more todos to determine padding of first 9 todos
-    let length = todos.len();
-
-    for (i, todo) in todos.iter().enumerate() {
-        let index = i + 1;
-        let status = if todo.done { "✔︎" } else { "☐" };
-
-        // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = format_index(index, length);
-
-        let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
-
-        if todo.done {
-            println!("{}", todo_row.green()); // Print done todos in green
-        } else {
-            println!("{}", todo_row);
-        }
-    }
-
-    Ok(())
-}
-
 // TIP: This function is similar to `list_todos`, but it shows a `+` plus sign on the newly added todo (the last one)
 fn list_todos_after_add() -> Result<(), Error> {
     let todos = read_todos()?;
@@ -294,7 +262,7 @@ fn main() {
 
     match args.len() {
         1 => {
-            if let Err(e) = list_todos() {
+            if let Err(e) = view::todos::list_todos() {
                 eprintln!("Error: {}", e);
             }
         }
