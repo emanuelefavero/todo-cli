@@ -5,6 +5,9 @@ use std::fs;
 use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
+mod utils; // Import the utils module 
+use utils::*;
+
 #[derive(Serialize, Deserialize, Debug)]
 struct Todo {
     text: String,
@@ -76,11 +79,7 @@ fn list_todos() -> Result<(), Error> {
 
         // If there are more than 9 todos and the index is less than 10, we add padding
         let need_padding = length >= 10 && index < 10;
-        let formatted_index = if need_padding {
-            format!(" {}", index) // Index with left padding
-        } else {
-            index.to_string() // No padding needed
-        };
+        let formatted_index = format_index(index, need_padding);
 
         let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
 
@@ -113,11 +112,7 @@ fn list_todos_after_add() -> Result<(), Error> {
 
         // If there are more than 9 todos and the index is less than 10, we add padding
         let need_padding = length >= 10 && index < 10;
-        let formatted_index = if need_padding {
-            format!(" {}", index) // Index with left padding
-        } else {
-            index.to_string() // No padding needed
-        };
+        let formatted_index = format_index(index, need_padding);
 
         if i == todos.len() - 1 {
             let todo_row = format!("{} + {}", formatted_index, todo.text);
@@ -159,11 +154,7 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
 
         // If there are more than 9 todos and the index is less than 10, we add padding
         let need_padding = length >= 10 && todo_index < 10;
-        let formatted_index = if need_padding {
-            format!(" {}", todo_index) // Index with left padding
-        } else {
-            todo_index.to_string() // No padding needed
-        };
+        let formatted_index = format_index(todo_index, need_padding);
 
         // Show removed todo after the todo at its previous position
         if i == index - 1 {
