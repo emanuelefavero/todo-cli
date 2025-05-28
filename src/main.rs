@@ -17,7 +17,7 @@ mod view;
 fn list_todos() -> Result<(), Error> {
     let todos = read_todos()?;
 
-    view::list::title();
+    view::todos::title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -50,7 +50,7 @@ fn list_todos() -> Result<(), Error> {
 fn list_todos_after_add() -> Result<(), Error> {
     let todos = read_todos()?;
 
-    view::list::title();
+    view::todos::title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -87,7 +87,7 @@ fn list_todos_after_add() -> Result<(), Error> {
 fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = read_todos()?;
 
-    view::list::title();
+    view::todos::title();
 
     if todos.is_empty() {
         // Add padding to the removed todo row if needed
@@ -152,7 +152,7 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
 fn list_todos_after_toggle(index: usize) -> Result<(), Error> {
     let todos = read_todos()?;
 
-    view::list::title();
+    view::todos::title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -193,7 +193,7 @@ fn list_todos_after_toggle(index: usize) -> Result<(), Error> {
 fn clear_todos() -> Result<(), Error> {
     let todos = read_todos()?;
 
-    view::list::title();
+    view::todos::title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -228,7 +228,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
 
     // Check if the todo list is empty first
     if todos.is_empty() {
-        view::list::title();
+        view::todos::title();
         println!("📋 Empty");
         return Ok(());
     }
@@ -254,7 +254,7 @@ fn toggle_done(index: usize) -> Result<(), Error> {
 
     // Check if the todo list is empty first
     if todos.is_empty() {
-        view::list::title();
+        view::todos::title();
         println!("📋 Empty");
         return Ok(());
     }
