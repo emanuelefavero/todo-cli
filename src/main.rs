@@ -8,7 +8,7 @@ mod utils;
 mod view;
 
 fn clear_todos() -> Result<(), Error> {
-    let todos = data::todos::read_todos()?;
+    let todos = data::todos::read()?;
 
     view::todos::title();
 
@@ -25,7 +25,7 @@ fn clear_todos() -> Result<(), Error> {
 }
 
 fn add_todo(text: &str) -> Result<(), Error> {
-    let mut todos = data::todos::read_todos()?;
+    let mut todos = data::todos::read()?;
 
     todos.push(Todo {
         text: text.to_string(),
@@ -41,7 +41,7 @@ fn add_todo(text: &str) -> Result<(), Error> {
 }
 
 fn remove_todo(index: usize) -> Result<(), Error> {
-    let mut todos = data::todos::read_todos()?;
+    let mut todos = data::todos::read()?;
 
     // Check if the todo list is empty first
     if todos.is_empty() {
@@ -67,7 +67,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
 }
 
 fn toggle_done(index: usize) -> Result<(), Error> {
-    let mut todos = data::todos::read_todos()?;
+    let mut todos = data::todos::read()?;
 
     // Check if the todo list is empty first
     if todos.is_empty() {

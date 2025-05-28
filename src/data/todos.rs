@@ -14,7 +14,7 @@ fn get_todo_file_path() -> PathBuf {
 }
 
 // * Reads todos from a JSON file
-pub fn read_todos() -> Result<Vec<Todo>, Error> {
+pub fn read() -> Result<Vec<Todo>, Error> {
     let path = get_todo_file_path();
 
     if !path.exists() {
