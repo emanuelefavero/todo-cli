@@ -77,7 +77,7 @@ pub fn clear() -> Result<(), Error> {
 }
 
 // * Adds a new todo to the list
-pub fn add_todo(text: &str) -> Result<(), Error> {
+pub fn add(text: &str) -> Result<(), Error> {
     let mut todos = read()?;
 
     todos.push(Todo {

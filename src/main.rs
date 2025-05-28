@@ -90,7 +90,7 @@ fn main() {
             }
         }
         3 if args[1] == "add" => {
-            if let Err(e) = data::todos::add_todo(&args[2]) {
+            if let Err(e) = data::todos::add(&args[2]) {
                 eprintln!("Error: {}", e);
             }
         }
