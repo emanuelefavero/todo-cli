@@ -11,6 +11,9 @@ use models::todo::Todo;
 mod utils;
 use utils::format::format_index;
 
+mod view;
+use view::list;
+
 fn get_todo_file_path() -> PathBuf {
     let mut path = dirs::home_dir().expect("Could not find home directory");
     path.push(".todo");
@@ -51,16 +54,10 @@ fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
     Ok(())
 }
 
-fn print_todo_list_title() {
-    println!(); // Blank line
-    println!("📝 {}", "Todo List".bold());
-    println!("{}", "────────────────────────────".dimmed());
-}
-
 fn list_todos() -> Result<(), Error> {
     let todos = read_todos()?;
 
-    print_todo_list_title();
+    list::print_title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -93,7 +90,7 @@ fn list_todos() -> Result<(), Error> {
 fn list_todos_after_add() -> Result<(), Error> {
     let todos = read_todos()?;
 
-    print_todo_list_title();
+    list::print_title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -130,7 +127,7 @@ fn list_todos_after_add() -> Result<(), Error> {
 fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = read_todos()?;
 
-    print_todo_list_title();
+    list::print_title();
 
     if todos.is_empty() {
         // Add padding to the removed todo row if needed
@@ -195,7 +192,7 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
 fn list_todos_after_toggle(index: usize) -> Result<(), Error> {
     let todos = read_todos()?;
 
-    print_todo_list_title();
+    list::print_title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -236,7 +233,7 @@ fn list_todos_after_toggle(index: usize) -> Result<(), Error> {
 fn clear_todos() -> Result<(), Error> {
     let todos = read_todos()?;
 
-    print_todo_list_title();
+    list::print_title();
 
     if todos.is_empty() {
         println!("📋 Empty");
@@ -271,7 +268,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
 
     // Check if the todo list is empty first
     if todos.is_empty() {
-        print_todo_list_title();
+        list::print_title();
         println!("📋 Empty");
         return Ok(());
     }
@@ -297,7 +294,7 @@ fn toggle_done(index: usize) -> Result<(), Error> {
 
     // Check if the todo list is empty first
     if todos.is_empty() {
-        print_todo_list_title();
+        list::print_title();
         println!("📋 Empty");
         return Ok(());
     }
