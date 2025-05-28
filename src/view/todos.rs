@@ -6,6 +6,7 @@ use crate::data;
 use crate::models::todo::Todo;
 use crate::utils::format::format_index;
 
+// * Show the title of the todo list
 pub fn title() {
     println!(); // Blank line
     println!("📝 {}", "Todo List".bold());

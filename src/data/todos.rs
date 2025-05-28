@@ -4,6 +4,8 @@ use std::path::PathBuf;
 
 use crate::models::todo::Todo;
 
+// 🔒 PRIVATE ---------------------------------
+
 // ? Creates the file path for the todo file
 fn file_path() -> PathBuf {
     // Get the home directory
@@ -18,6 +20,8 @@ fn file_path() -> PathBuf {
     path.push("todos.json"); // Append the filename to the path
     path // Return the full path to the todo file
 }
+
+// 📢 PUBLIC ----------------------------------
 
 // * Reads todos from a JSON file
 pub fn read() -> Result<Vec<Todo>, Error> {
