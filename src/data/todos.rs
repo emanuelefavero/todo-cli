@@ -40,7 +40,7 @@ pub fn read() -> Result<Vec<Todo>, Error> {
 }
 
 // * Writes todos to a JSON file
-pub fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
+pub fn write(todos: &Vec<Todo>) -> Result<(), Error> {
     let path = file_path();
     let content = serde_json::to_string_pretty(todos).map_err(|e| {
         Error::new(

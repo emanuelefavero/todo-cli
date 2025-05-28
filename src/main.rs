@@ -18,7 +18,7 @@ fn clear_todos() -> Result<(), Error> {
     }
 
     // Write an empty array to clear all todos
-    data::todos::write_todos(&Vec::new())?;
+    data::todos::write(&Vec::new())?;
     println!("🗑️  All todos cleared");
 
     Ok(())
@@ -32,7 +32,7 @@ fn add_todo(text: &str) -> Result<(), Error> {
         done: false,
     });
 
-    data::todos::write_todos(&todos)?;
+    data::todos::write(&todos)?;
 
     // Show the updated list with the new todo
     view::todos::added()?;
@@ -58,7 +58,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     }
 
     let todo = todos.remove(index - 1);
-    data::todos::write_todos(&todos)?;
+    data::todos::write(&todos)?;
 
     // Show the updated list with the removed todo
     view::todos::removed(index, &todo)?;
@@ -86,7 +86,7 @@ fn toggle_done(index: usize) -> Result<(), Error> {
     // Toggle the done status
     todos[index - 1].done = !todos[index - 1].done;
 
-    data::todos::write_todos(&todos)?;
+    data::todos::write(&todos)?;
 
     // Show the updated list
     view::todos::toggled(index)?;
