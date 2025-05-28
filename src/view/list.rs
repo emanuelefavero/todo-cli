@@ -1,6 +1,6 @@
 use colored::Colorize;
 
-pub fn print_title() {
+pub fn title() {
     println!(); // Blank line
     println!("📝 {}", "Todo List".bold());
     println!("{}", "────────────────────────────".dimmed());
