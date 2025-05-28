@@ -78,8 +78,7 @@ fn list_todos() -> Result<(), Error> {
         let status = if todo.done { "✔︎" } else { "☐" };
 
         // If there are more than 9 todos and the index is less than 10, we add padding
-        let need_padding = length >= 10 && index < 10;
-        let formatted_index = format_index(index, need_padding);
+        let formatted_index = format_index(index, length);
 
         let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
 
@@ -111,8 +110,7 @@ fn list_todos_after_add() -> Result<(), Error> {
         let status = if todo.done { "✔︎" } else { "☐" };
 
         // If there are more than 9 todos and the index is less than 10, we add padding
-        let need_padding = length >= 10 && index < 10;
-        let formatted_index = format_index(index, need_padding);
+        let formatted_index = format_index(index, length);
 
         if i == todos.len() - 1 {
             let todo_row = format!("{} + {}", formatted_index, todo.text);
@@ -153,8 +151,7 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
         let status = if todo.done { "✔︎" } else { "☐" };
 
         // If there are more than 9 todos and the index is less than 10, we add padding
-        let need_padding = length >= 10 && todo_index < 10;
-        let formatted_index = format_index(todo_index, need_padding);
+        let formatted_index = format_index(todo_index, length);
 
         // Show removed todo after the todo at its previous position
         if i == index - 1 {

@@ -1,5 +1,7 @@
 // Returns a formatted index string with left padding if needed
-pub fn format_index(index: usize, need_padding: bool) -> String {
+pub fn format_index(index: usize, length: usize) -> String {
+    let need_padding = length >= 10 && index < 10;
+
     if need_padding {
         format!(" {}", index) // Index with left padding
     } else {
