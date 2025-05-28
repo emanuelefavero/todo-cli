@@ -1,12 +1,10 @@
 use std::env;
-use std::fs;
 use std::io::{Error, ErrorKind};
-use std::path::PathBuf;
 
 use colored::Colorize;
 
 mod data;
-use data::todos::read_todos;
+use data::todos::{read_todos, write_todos};
 
 mod models;
 use models::todo::Todo;
@@ -16,27 +14,6 @@ use utils::format::format_index;
 
 mod view;
 use view::list;
-
-fn get_todo_file_path() -> PathBuf {
-    let mut path = dirs::home_dir().expect("Could not find home directory");
-    path.push(".todo");
-    fs::create_dir_all(&path).expect("Could not create directory");
-    path.push("todos.json");
-    path
-}
-
-fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
-    let path = get_todo_file_path();
-    let content = serde_json::to_string_pretty(todos).map_err(|e| {
-        Error::new(
-            ErrorKind::InvalidData,
-            format!("Could not serialize todos: {}", e),
-        )
-    })?;
-
-    fs::write(path, content)?;
-    Ok(())
-}
 
 fn list_todos() -> Result<(), Error> {
     let todos = read_todos()?;

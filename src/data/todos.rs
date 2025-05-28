@@ -32,3 +32,17 @@ pub fn read_todos() -> Result<Vec<Todo>, Error> {
 
     Ok(todos)
 }
+
+// * Writes todos to a JSON file
+pub fn write_todos(todos: &Vec<Todo>) -> Result<(), Error> {
+    let path = get_todo_file_path();
+    let content = serde_json::to_string_pretty(todos).map_err(|e| {
+        Error::new(
+            ErrorKind::InvalidData,
+            format!("Could not serialize todos: {}", e),
+        )
+    })?;
+
+    fs::write(path, content)?;
+    Ok(())
+}
