@@ -57,13 +57,13 @@ fn main() {
         },
         2 if args[1] == "done" => {
             // If no index is provided, toggle the first todo
-            if let Err(e) = data::todos::toggle_done(1) {
+            if let Err(e) = data::todos::toggle(1) {
                 eprintln!("Error: {}", e);
             }
         }
         3 if args[1] == "done" => match args[2].parse::<usize>() {
             Ok(index) => {
-                if let Err(e) = data::todos::toggle_done(index) {
+                if let Err(e) = data::todos::toggle(index) {
                     eprintln!("Error: {}", e);
                 }
             }

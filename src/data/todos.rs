@@ -121,7 +121,7 @@ pub fn remove(index: usize) -> Result<(), Error> {
 }
 
 // * Toggles the done status of a todo by index
-pub fn toggle_done(index: usize) -> Result<(), Error> {
+pub fn toggle(index: usize) -> Result<(), Error> {
     let mut todos = read()?;
 
     // Check if the todo list is empty first
