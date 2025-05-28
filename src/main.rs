@@ -3,25 +3,8 @@ use std::io::{Error, ErrorKind};
 
 mod data;
 mod models;
-use models::todo::Todo;
 mod utils;
 mod view;
-
-fn add_todo(text: &str) -> Result<(), Error> {
-    let mut todos = data::todos::read()?;
-
-    todos.push(Todo {
-        text: text.to_string(),
-        done: false,
-    });
-
-    data::todos::write(&todos)?;
-
-    // Show the updated list with the new todo
-    view::todos::added()?;
-
-    Ok(())
-}
 
 fn remove_todo(index: usize) -> Result<(), Error> {
     let mut todos = data::todos::read()?;
@@ -107,7 +90,7 @@ fn main() {
             }
         }
         3 if args[1] == "add" => {
-            if let Err(e) = add_todo(&args[2]) {
+            if let Err(e) = data::todos::add_todo(&args[2]) {
                 eprintln!("Error: {}", e);
             }
         }

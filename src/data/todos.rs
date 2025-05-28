@@ -75,3 +75,20 @@ pub fn clear() -> Result<(), Error> {
 
     Ok(())
 }
+
+// * Adds a new todo to the list
+pub fn add_todo(text: &str) -> Result<(), Error> {
+    let mut todos = read()?;
+
+    todos.push(Todo {
+        text: text.to_string(),
+        done: false,
+    });
+
+    write(&todos)?;
+
+    // Show the updated list with the new todo
+    view::todos::added()?;
+
+    Ok(())
+}
