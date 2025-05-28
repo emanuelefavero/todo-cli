@@ -2,14 +2,13 @@ use std::env;
 use std::io::{Error, ErrorKind};
 
 mod data;
-use data::todos::{read_todos, write_todos};
 mod models;
 use models::todo::Todo;
 mod utils;
 mod view;
 
 fn clear_todos() -> Result<(), Error> {
-    let todos = read_todos()?;
+    let todos = data::todos::read_todos()?;
 
     view::todos::title();
 
@@ -19,21 +18,21 @@ fn clear_todos() -> Result<(), Error> {
     }
 
     // Write an empty array to clear all todos
-    write_todos(&Vec::new())?;
+    data::todos::write_todos(&Vec::new())?;
     println!("🗑️  All todos cleared");
 
     Ok(())
 }
 
 fn add_todo(text: &str) -> Result<(), Error> {
-    let mut todos = read_todos()?;
+    let mut todos = data::todos::read_todos()?;
 
     todos.push(Todo {
         text: text.to_string(),
         done: false,
     });
 
-    write_todos(&todos)?;
+    data::todos::write_todos(&todos)?;
 
     // Show the updated list with the new todo
     view::todos::added()?;
@@ -42,7 +41,7 @@ fn add_todo(text: &str) -> Result<(), Error> {
 }
 
 fn remove_todo(index: usize) -> Result<(), Error> {
-    let mut todos = read_todos()?;
+    let mut todos = data::todos::read_todos()?;
 
     // Check if the todo list is empty first
     if todos.is_empty() {
@@ -59,7 +58,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     }
 
     let todo = todos.remove(index - 1);
-    write_todos(&todos)?;
+    data::todos::write_todos(&todos)?;
 
     // Show the updated list with the removed todo
     view::todos::removed(index, &todo)?;
@@ -68,7 +67,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
 }
 
 fn toggle_done(index: usize) -> Result<(), Error> {
-    let mut todos = read_todos()?;
+    let mut todos = data::todos::read_todos()?;
 
     // Check if the todo list is empty first
     if todos.is_empty() {
@@ -87,7 +86,7 @@ fn toggle_done(index: usize) -> Result<(), Error> {
     // Toggle the done status
     todos[index - 1].done = !todos[index - 1].done;
 
-    write_todos(&todos)?;
+    data::todos::write_todos(&todos)?;
 
     // Show the updated list
     view::todos::toggled(index)?;

@@ -2,7 +2,7 @@ use std::io::Error;
 
 use colored::Colorize;
 
-use crate::data::todos::read_todos;
+use crate::data;
 use crate::models::todo::Todo;
 use crate::utils::format::format_index;
 
@@ -14,7 +14,7 @@ pub fn title() {
 
 // * Show all todos in the list
 pub fn all() -> Result<(), Error> {
-    let todos = read_todos()?;
+    let todos = data::todos::read_todos()?;
 
     title();
 
@@ -47,7 +47,7 @@ pub fn all() -> Result<(), Error> {
 
 // * Show the newly added todo after adding it to the list
 pub fn added() -> Result<(), Error> {
-    let todos = read_todos()?;
+    let todos = data::todos::read_todos()?;
 
     title();
 
@@ -83,7 +83,7 @@ pub fn added() -> Result<(), Error> {
 
 // * Show the removed todo after removing it from the list
 pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
-    let todos = read_todos()?;
+    let todos = data::todos::read_todos()?;
 
     title();
 
@@ -148,7 +148,7 @@ pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
 
 // * Show the toggled todo (done/undone) after toggling its status
 pub fn toggled(index: usize) -> Result<(), Error> {
-    let todos = read_todos()?;
+    let todos = data::todos::read_todos()?;
 
     title();
 
