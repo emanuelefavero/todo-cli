@@ -102,7 +102,7 @@ fn main() {
             print_usage();
         }
         2 if args[1] == "clear" => {
-            if let Err(e) = data::todos::clear_todos() {
+            if let Err(e) = data::todos::clear() {
                 eprintln!("Error: {}", e);
             }
         }

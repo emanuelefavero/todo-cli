@@ -59,7 +59,7 @@ pub fn write(todos: &Vec<Todo>) -> Result<(), Error> {
 }
 
 // * Clears all todos from the list
-pub fn clear_todos() -> Result<(), Error> {
+pub fn clear() -> Result<(), Error> {
     let todos = read()?;
 
     view::todos::title();
