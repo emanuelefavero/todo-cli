@@ -194,6 +194,48 @@ fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Erro
     Ok(())
 }
 
+// This function is similar to `list_todos`, but it shows the toggled todo with a special message after the todo text so users can directly see which todo was toggled
+fn list_todos_after_toggle(index: usize) -> Result<(), Error> {
+    let todos = read_todos()?;
+
+    print_todo_list_title();
+
+    if todos.is_empty() {
+        println!("📋 Empty");
+        return Ok(());
+    }
+
+    // Check if we have 10 or more todos to determine padding of first 9 todos
+    let length = todos.len();
+
+    for (i, todo) in todos.iter().enumerate() {
+        let todo_index = i + 1;
+        let status = if todo.done { "✔︎" } else { "☐" };
+
+        // If there are more than 9 todos and the index is less than 10, we add padding
+        let formatted_index = format_index(todo_index, length);
+
+        let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
+
+        if todo_index == index {
+            // If this is the toggled todo, show it with a special message
+            if todo.done {
+                let message = "✦".yellow();
+                println!("{} {}", todo_row.green(), message);
+            } else {
+                let message = "✦".yellow();
+                println!("{} {}", todo_row, message);
+            }
+        } else if todo.done {
+            println!("{}", todo_row.green()); // Print done todos in green
+        } else {
+            println!("{}", todo_row);
+        }
+    }
+
+    Ok(())
+}
+
 fn clear_todos() -> Result<(), Error> {
     let todos = read_todos()?;
 
@@ -284,7 +326,7 @@ fn toggle_done(index: usize) -> Result<(), Error> {
     println!("Todo marked as {}: {}", status, todos[index - 1].text);
 
     // Show the updated list
-    list_todos()?;
+    list_todos_after_toggle(index)?;
 
     Ok(())
 }
