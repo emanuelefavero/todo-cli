@@ -5,18 +5,6 @@ mod models;
 mod utils;
 mod view;
 
-fn print_usage() {
-    println!("Usage:");
-    println!("  todo - List all todos");
-    println!("  todo add \"Todo text\" - Add a new todo");
-    println!("  todo rm - Remove the first todo");
-    println!("  todo rm <number> - Remove a specific todo by number");
-    println!("  todo done - Toggle the first todo completion status");
-    println!("  todo done <number> - Toggle todo completion status");
-    println!("  todo clear - Remove all todos");
-    println!("  todo help - Show this help message");
-}
-
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -27,7 +15,7 @@ fn main() {
             }
         }
         2 if args[1] == "help" => {
-            print_usage();
+            view::help::print_usage();
         }
         2 if args[1] == "clear" => {
             if let Err(e) = data::todos::clear() {
@@ -73,7 +61,7 @@ fn main() {
         },
         _ => {
             eprintln!("Invalid command");
-            print_usage();
+            view::help::print_usage();
         }
     }
 }
