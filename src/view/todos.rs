@@ -46,7 +46,7 @@ pub fn all() -> Result<(), Error> {
 }
 
 // * Show the newly added todo after adding it to the list
-pub fn list_todos_after_add() -> Result<(), Error> {
+pub fn added() -> Result<(), Error> {
     let todos = read_todos()?;
 
     title();
@@ -82,7 +82,7 @@ pub fn list_todos_after_add() -> Result<(), Error> {
 }
 
 // * Show the removed todo after removing it from the list
-pub fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), Error> {
+pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = read_todos()?;
 
     title();
@@ -147,7 +147,7 @@ pub fn list_todos_after_remove(index: usize, removed_todo: &Todo) -> Result<(), 
 }
 
 // * Show the toggled todo (done/undone) after toggling its status
-pub fn list_todos_after_toggle(index: usize) -> Result<(), Error> {
+pub fn toggled(index: usize) -> Result<(), Error> {
     let todos = read_todos()?;
 
     title();

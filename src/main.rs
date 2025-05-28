@@ -36,7 +36,7 @@ fn add_todo(text: &str) -> Result<(), Error> {
     write_todos(&todos)?;
 
     // Show the updated list with the new todo
-    view::todos::list_todos_after_add()?;
+    view::todos::added()?;
 
     Ok(())
 }
@@ -62,7 +62,7 @@ fn remove_todo(index: usize) -> Result<(), Error> {
     write_todos(&todos)?;
 
     // Show the updated list with the removed todo
-    view::todos::list_todos_after_remove(index, &todo)?;
+    view::todos::removed(index, &todo)?;
 
     Ok(())
 }
@@ -90,7 +90,7 @@ fn toggle_done(index: usize) -> Result<(), Error> {
     write_todos(&todos)?;
 
     // Show the updated list
-    view::todos::list_todos_after_toggle(index)?;
+    view::todos::toggled(index)?;
 
     Ok(())
 }
