@@ -22,6 +22,16 @@ pub fn handler(args: Vec<String>) {
                 eprintln!("Error: {}", e);
             }
         }
+        4 if args[1] == "add" => match args[3].parse::<usize>() {
+            Ok(index) => {
+                if let Err(e) = data::todos::add_at_index(&args[2], index) {
+                    eprintln!("Error: {}", e);
+                }
+            }
+            Err(_) => {
+                eprintln!("Invalid index: {}", args[3]);
+            }
+        },
         2 if args[1] == "rm" => {
             // If no index is provided, remove the first todo
             if let Err(e) = data::todos::remove(1) {

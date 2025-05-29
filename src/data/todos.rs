@@ -76,6 +76,34 @@ pub fn add(text: &str) -> Result<(), Error> {
     Ok(())
 }
 
+// * Adds a new todo to the list at a specific index
+pub fn add_at_index(text: &str, index: usize) -> Result<(), Error> {
+    let mut todos = read()?;
+
+    // Check if the index is valid
+    if index == 0 || index > todos.len() + 1 {
+        return Err(Error::new(
+            ErrorKind::InvalidInput,
+            format!("Invalid index: {}", index),
+        ));
+    }
+
+    let new_todo = Todo {
+        text: text.to_string(),
+        done: false,
+    };
+
+    // Insert the new todo at the specified index
+    todos.insert(index - 1, new_todo);
+
+    write(&todos)?;
+
+    // Show the updated list with the new todo
+    view::todos::added_at_index(index)?;
+
+    Ok(())
+}
+
 // * Removes a todo from the list by index
 pub fn remove(index: usize) -> Result<(), Error> {
     let mut todos = read()?;

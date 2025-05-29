@@ -67,6 +67,34 @@ pub fn added() -> Result<(), Error> {
     Ok(())
 }
 
+// * Show the newly added todo after adding it at a specific index
+pub fn added_at_index(index: usize) -> Result<(), Error> {
+    let todos = setup_todos_view()?;
+
+    if todos.is_empty() {
+        return Ok(());
+    }
+
+    let length = todos.len();
+
+    // Show the todos
+    for (i, todo) in todos.iter().enumerate() {
+        let todo_index = i + 1;
+        let (formatted_index, formatted_status) = format_todo(todo_index, todo, length);
+
+        // Print the added todo with a + sign at the specified index
+        if todo_index == index {
+            let todo_row = format!("{} + {}", formatted_index, todo.text);
+            println!("{}", todo_row.cyan());
+        } else {
+            // Print regular todos
+            print_todo(&formatted_index, &formatted_status, &todo.text);
+        }
+    }
+
+    Ok(())
+}
+
 // * Show the removed todo after removing it from the list
 pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = setup_todos_view()?;

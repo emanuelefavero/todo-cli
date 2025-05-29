@@ -3,6 +3,7 @@ pub fn usage() {
     println!("Usage:");
     println!("  todo - List all todos");
     println!("  todo add \"Todo text\" - Add a new todo");
+    println!("  todo add \"Todo text\" <number> - Add a new todo at specific position");
     println!("  todo rm - Remove the first todo");
     println!("  todo rm <number> - Remove a specific todo by number");
     println!("  todo done - Toggle the first todo completion status");
