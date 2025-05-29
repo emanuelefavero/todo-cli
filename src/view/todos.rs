@@ -59,21 +59,25 @@ pub fn added() -> Result<(), Error> {
 
     for (i, todo) in todos.iter().enumerate() {
         let index = i + 1;
-        let status = if todo.done { "✔︎" } else { "☐" };
+        let formatted_index = utils::format::pad_index(index, length); // Add padding to index less than 10
 
-        // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = utils::format::pad_index(index, length);
+        let status = if todo.done { "✔︎" } else { "☐" };
+        let formatted_status = if todo.done {
+            status.green()
+        } else {
+            status.blue()
+        };
 
         if i == todos.len() - 1 {
             let todo_row = format!("{} + {}", formatted_index, todo.text);
-            println!("{}", todo_row.blue()); // print last todo
-        } else if todo.done {
-            println!(
-                "{}",
-                format!("{} {} {}", formatted_index, status, todo.text).green()
-            );
+            println!("{}", todo_row.cyan()); // print last todo
         } else {
-            println!("{} {} {}", formatted_index, status, todo.text);
+            println!(
+                "{} {} {}",
+                formatted_index.purple(),
+                formatted_status,
+                todo.text
+            );
         }
     }
 
