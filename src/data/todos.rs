@@ -5,23 +5,6 @@ use std::path::PathBuf;
 use crate::models::todo::Todo;
 use crate::view;
 
-// 🔒 PRIVATE ---------------------------------
-
-// ? Creates the file path for the todo file
-fn file_path() -> PathBuf {
-    // Get the home directory
-    let mut path = dirs::home_dir().expect("Could not find home directory");
-
-    // NOTE: Choose the directory where the todo file will be stored
-    path.push(".todo");
-
-    // Create the directory if it doesn't exist
-    fs::create_dir_all(&path).expect("Could not create directory: .todo/");
-
-    path.push("todos.json"); // Append the filename to the path
-    path // Return the full path to the todo file
-}
-
 // 📢 PUBLIC ----------------------------------
 
 // * Reads todos from a JSON file
@@ -147,4 +130,21 @@ pub fn toggle(index: usize) -> Result<(), Error> {
     view::todos::toggled(index)?;
 
     Ok(())
+}
+
+// 🔒 PRIVATE ---------------------------------
+
+// ? Creates the file path for the todo file
+fn file_path() -> PathBuf {
+    // Get the home directory
+    let mut path = dirs::home_dir().expect("Could not find home directory");
+
+    // NOTE: Choose the directory where the todo file will be stored
+    path.push(".todo");
+
+    // Create the directory if it doesn't exist
+    fs::create_dir_all(&path).expect("Could not create directory: .todo/");
+
+    path.push("todos.json"); // Append the filename to the path
+    path // Return the full path to the todo file
 }
