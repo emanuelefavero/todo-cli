@@ -29,18 +29,16 @@ pub fn all() -> Result<(), Error> {
 
     for (i, todo) in todos.iter().enumerate() {
         let index = i + 1;
+        let formatted_index = utils::format::pad_index(index, length).purple(); // Add padding to index less than 10
+
         let status = if todo.done { "✔︎" } else { "☐" };
-
-        // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = utils::format::pad_index(index, length);
-
-        let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
-
-        if todo.done {
-            println!("{}", todo_row.green()); // Print done todos in green
+        let formatted_status = if todo.done {
+            status.green()
         } else {
-            println!("{}", todo_row);
-        }
+            status.blue()
+        };
+
+        println!("{} {} {}", formatted_index, formatted_status, todo.text);
     }
 
     Ok(())
