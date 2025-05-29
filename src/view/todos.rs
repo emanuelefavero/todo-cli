@@ -40,35 +40,7 @@ pub fn all() -> Result<(), Error> {
 }
 
 // * Show the newly added todo after adding it to the list
-pub fn added() -> Result<(), Error> {
-    let todos = setup_todos_view()?;
-
-    if todos.is_empty() {
-        return Ok(());
-    }
-
-    let length = todos.len();
-
-    // Show the todos
-    for (i, todo) in todos.iter().enumerate() {
-        let index = i + 1;
-        let (formatted_index, formatted_status) = format_todo(index, todo, length);
-
-        // Print the added todo (last one in the list)
-        if i == todos.len() - 1 {
-            let todo_row = format!("{} + {}", formatted_index, todo.text);
-            println!("{}", todo_row.cyan());
-        } else {
-            // Print regular todos
-            print_todo(&formatted_index, &formatted_status, &todo.text);
-        }
-    }
-
-    Ok(())
-}
-
-// * Show the newly added todo after adding it at a specific index
-pub fn added_at_index(index: usize) -> Result<(), Error> {
+pub fn added(index: Option<usize>) -> Result<(), Error> {
     let todos = setup_todos_view()?;
 
     if todos.is_empty() {
@@ -82,10 +54,23 @@ pub fn added_at_index(index: usize) -> Result<(), Error> {
         let todo_index = i + 1;
         let (formatted_index, formatted_status) = format_todo(todo_index, todo, length);
 
-        // Print the added todo with a + sign at the specified index
-        if todo_index == index {
+        // Check if the current todo is the newly added one
+        // TIP: `match index` is needed to determine which command was used to add the todo
+        let is_newly_added_todo = match index {
+            Some(idx) => todo_index == idx, // Return true if the provided index is equal to the current index
+
+            // TIP: If an index is provided, it means that the command was `todo add "Todo text" <number>`, so we check if the current index matches the provided index
+            None => i == todos.len() - 1, // Return true if no index is provided and the current index is the last one
+
+                                          // TIP: If no index is provided, it means that the command was `todo add "Todo text"` without a specific index, so the newly added todo is the last one in the list
+        };
+
+        // If the current todo is the newly added one, highlight it
+        if is_newly_added_todo {
             let todo_row = format!("{} + {}", formatted_index, todo.text);
             println!("{}", todo_row.cyan());
+
+        // Otherwise, print the todo normally
         } else {
             // Print regular todos
             print_todo(&formatted_index, &formatted_status, &todo.text);

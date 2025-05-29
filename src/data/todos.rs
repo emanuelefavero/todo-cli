@@ -59,47 +59,43 @@ pub fn clear() -> Result<(), Error> {
     Ok(())
 }
 
-// * Adds a new todo to the list
-pub fn add(text: &str) -> Result<(), Error> {
+// * Adds a new todo to the list, optionally at a specific index
+pub fn add(text: &str, index: Option<usize>) -> Result<(), Error> {
     let mut todos = read()?;
 
-    todos.push(Todo {
-        text: text.to_string(),
-        done: false,
-    });
-
-    write(&todos)?;
-
-    // Show the updated list with the new todo
-    view::todos::added()?;
-
-    Ok(())
-}
-
-// * Adds a new todo to the list at a specific index
-pub fn add_at_index(text: &str, index: usize) -> Result<(), Error> {
-    let mut todos = read()?;
-
-    // Check if the index is valid
-    if index == 0 || index > todos.len() + 1 {
-        return Err(Error::new(
-            ErrorKind::InvalidInput,
-            format!("Invalid index: {}", index),
-        ));
-    }
-
+    // Create the new todo
     let new_todo = Todo {
         text: text.to_string(),
         done: false,
     };
 
-    // Insert the new todo at the specified index
-    todos.insert(index - 1, new_todo);
+    // Either insert at a specific index or add to the end
+    // TIP: `match index` is used to handle both cases
+    match index {
+        // If an index is provided, insert at that position
+        Some(idx) => {
+            // Check if the index is valid
+            if idx == 0 || idx > todos.len() + 1 {
+                return Err(Error::new(
+                    ErrorKind::InvalidInput,
+                    format!("Invalid index: {}", idx),
+                ));
+            }
+
+            // Insert the new todo at the specified index
+            todos.insert(idx - 1, new_todo);
+        }
+        // If no index is provided, add to the end of the list
+        None => {
+            // Add to the end of the list (default behavior)
+            todos.push(new_todo);
+        }
+    }
 
     write(&todos)?;
 
-    // Show the updated list with the new todo
-    view::todos::added_at_index(index)?;
+    // Show the updated list with the new todo highlighted
+    view::todos::added(index)?;
 
     Ok(())
 }
