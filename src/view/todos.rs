@@ -188,25 +188,36 @@ pub fn toggled(index: usize) -> Result<(), Error> {
 
     // Show the todos
     for (i, todo) in todos.iter().enumerate() {
+        // Index
         let todo_index = i + 1;
+        let formatted_index = utils::format::pad_index(todo_index, length); // Add padding to index less than 10
+
+        // Status
         let status = if todo.done { "✔︎" } else { "☐" };
+        let formatted_status = if todo.done {
+            status.green()
+        } else {
+            status.blue()
+        };
 
-        // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = utils::format::pad_index(todo_index, length);
+        // Format the todo row
+        let todo_row = format!(
+            "{} {} {}",
+            formatted_index.purple(),
+            formatted_status,
+            todo.text
+        );
+        let toggled_todo_row = format!("{} {} {}", formatted_index, formatted_status, todo.text);
+        let marker = "✦".yellow();
 
-        let todo_row = format!("{} {} {}", formatted_index, status, todo.text);
-
+        // If the current todo is the one that was toggled, highlight it
         if todo_index == index {
-            // If this is the toggled todo, show it with a special message
             if todo.done {
-                let message = "✦".yellow();
-                println!("{} {}", todo_row.green(), message);
+                println!("{} {}", toggled_todo_row.green(), marker); // Done in green
             } else {
-                let message = "✦".yellow();
-                println!("{} {}", todo_row, message);
+                println!("{} {}", toggled_todo_row.blue(), marker); // Undone with marker
             }
-        } else if todo.done {
-            println!("{}", todo_row.green()); // Print done todos in green
+        // Otherwise, print the todo normally
         } else {
             println!("{}", todo_row);
         }
