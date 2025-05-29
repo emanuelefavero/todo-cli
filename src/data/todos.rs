@@ -65,7 +65,7 @@ pub fn clear() -> Result<(), Error> {
     view::todos::title();
 
     if todos.is_empty() {
-        println!("📋 Empty");
+        view::todos::empty();
         return Ok(());
     }
 
@@ -100,7 +100,7 @@ pub fn remove(index: usize) -> Result<(), Error> {
     // Check if the todo list is empty first
     if todos.is_empty() {
         view::todos::title();
-        println!("📋 Empty");
+        view::todos::empty();
         return Ok(());
     }
 
@@ -127,7 +127,7 @@ pub fn toggle(index: usize) -> Result<(), Error> {
     // Check if the todo list is empty first
     if todos.is_empty() {
         view::todos::title();
-        println!("📋 Empty");
+        view::todos::empty();
         return Ok(());
     }
 

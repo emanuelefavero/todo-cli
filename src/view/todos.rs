@@ -13,15 +13,19 @@ pub fn title() {
     println!("{}", "────────────────────────────".dimmed());
 }
 
+// * Show Empty message
+pub fn empty() {
+    println!("{}", "📋 Empty".dimmed());
+}
+
 // * Show all todos in the list
 pub fn all() -> Result<(), Error> {
     let todos = data::todos::read()?;
 
     title(); // Show the title
 
-    // If the todo list is empty, show Empty message
     if todos.is_empty() {
-        println!("📋 Empty");
+        empty(); // Show empty message
         return Ok(());
     }
 
@@ -59,9 +63,8 @@ pub fn added() -> Result<(), Error> {
 
     title(); // Show the title
 
-    // If the todo list is empty, show Empty message
     if todos.is_empty() {
-        println!("📋 Empty");
+        empty(); // Show empty message
         return Ok(());
     }
 
@@ -107,12 +110,11 @@ pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
 
     title(); // Show the title
 
-    // If the todo list is empty, show Empty message
     if todos.is_empty() {
         // Add padding to the removed todo row if needed
         let removed_todo_row = format!("-  {}", removed_todo.text.strikethrough());
         println!("{}", removed_todo_row.red()); // show the removed todo
-        println!("📋 Empty");
+        empty(); // Show empty message
         return Ok(());
     }
 
@@ -177,9 +179,8 @@ pub fn toggled(index: usize) -> Result<(), Error> {
 
     title(); // Show the title
 
-    // If the todo list is empty, show Empty message
     if todos.is_empty() {
-        println!("📋 Empty");
+        empty(); // Show empty message
         return Ok(());
     }
 
