@@ -6,55 +6,6 @@ use crate::data;
 use crate::models::todo::Todo;
 use crate::utils;
 
-// 🔒 PRIVATE ---------------------------------
-
-// ? Helper function to setup todos view and handle empty list case
-fn setup_todos_view() -> Result<Vec<Todo>, Error> {
-    let todos = data::todos::read()?;
-
-    title(); // Show the title
-
-    if todos.is_empty() {
-        empty(); // Show empty message
-    }
-
-    Ok(todos)
-}
-
-// ? Helper function to format a todo's index and status
-fn format_todo(index: usize, todo: &Todo, list_length: usize) -> (String, colored::ColoredString) {
-    // Format index with padding if needed
-    let formatted_index = utils::format::pad_index(index, list_length);
-
-    // Format status with color
-    let status = if todo.done { "✔︎" } else { "☐" };
-    let formatted_status = if todo.done {
-        status.green()
-    } else {
-        status.blue()
-    };
-
-    (formatted_index, formatted_status)
-}
-
-// ? Helper function to print a standard todo item
-fn print_todo(index_str: &str, status: &colored::ColoredString, text: &str) {
-    println!("{} {} {}", index_str.purple(), status, text);
-}
-
-// ? Helper function to format a removed todo
-fn format_removed_todo(todo: &Todo, list_length: usize) -> String {
-    let removed_status = if todo.done { "✔︎" } else { "☐" };
-    let padding = if list_length >= 10 { " " } else { "" };
-
-    format!(
-        "{}- {} {}",
-        padding,
-        removed_status,
-        todo.text.strikethrough()
-    )
-}
-
 // 📢 PUBLIC ----------------------------------
 
 // * Show the title of the todo list
@@ -192,4 +143,53 @@ pub fn toggled(index: usize) -> Result<(), Error> {
     }
 
     Ok(())
+}
+
+// 🔒 PRIVATE ---------------------------------
+
+// ? Helper function to setup todos view and handle empty list case
+fn setup_todos_view() -> Result<Vec<Todo>, Error> {
+    let todos = data::todos::read()?;
+
+    title(); // Show the title
+
+    if todos.is_empty() {
+        empty(); // Show empty message
+    }
+
+    Ok(todos)
+}
+
+// ? Helper function to format a todo's index and status
+fn format_todo(index: usize, todo: &Todo, list_length: usize) -> (String, colored::ColoredString) {
+    // Format index with padding if needed
+    let formatted_index = utils::format::pad_index(index, list_length);
+
+    // Format status with color
+    let status = if todo.done { "✔︎" } else { "☐" };
+    let formatted_status = if todo.done {
+        status.green()
+    } else {
+        status.blue()
+    };
+
+    (formatted_index, formatted_status)
+}
+
+// ? Helper function to print a standard todo item
+fn print_todo(index_str: &str, status: &colored::ColoredString, text: &str) {
+    println!("{} {} {}", index_str.purple(), status, text);
+}
+
+// ? Helper function to format a removed todo
+fn format_removed_todo(todo: &Todo, list_length: usize) -> String {
+    let removed_status = if todo.done { "✔︎" } else { "☐" };
+    let padding = if list_length >= 10 { " " } else { "" };
+
+    format!(
+        "{}- {} {}",
+        padding,
+        removed_status,
+        todo.text.strikethrough()
+    )
 }
