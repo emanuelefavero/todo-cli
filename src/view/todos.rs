@@ -29,7 +29,7 @@ pub fn all() -> Result<(), Error> {
 
     for (i, todo) in todos.iter().enumerate() {
         let index = i + 1;
-        let formatted_index = utils::format::pad_index(index, length).purple(); // Add padding to index less than 10
+        let formatted_index = utils::format::pad_index(index, length); // Add padding to index less than 10
 
         let status = if todo.done { "✔︎" } else { "☐" };
         let formatted_status = if todo.done {
@@ -38,7 +38,12 @@ pub fn all() -> Result<(), Error> {
             status.blue()
         };
 
-        println!("{} {} {}", formatted_index, formatted_status, todo.text);
+        println!(
+            "{} {} {}",
+            formatted_index.purple(),
+            formatted_status,
+            todo.text
+        );
     }
 
     Ok(())
@@ -103,10 +108,13 @@ pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
 
     for (i, todo) in todos.iter().enumerate() {
         let todo_index = i + 1;
+        let formatted_index = utils::format::pad_index(todo_index, length); // Add padding to index less than 10
         let status = if todo.done { "✔︎" } else { "☐" };
-
-        // If there are more than 9 todos and the index is less than 10, we add padding
-        let formatted_index = utils::format::pad_index(todo_index, length);
+        let formatted_status = if todo.done {
+            status.green()
+        } else {
+            status.blue()
+        };
 
         // Show removed todo after the todo at its previous position
         if i == index - 1 {
@@ -122,14 +130,12 @@ pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
             println!("{}", removed_todo_row.red()); // show the removed todo
         }
 
-        if todo.done {
-            println!(
-                "{}",
-                format!("{} {} {}", formatted_index, status, todo.text).green()
-            );
-        } else {
-            println!("{} {} {}", formatted_index, status, todo.text);
-        }
+        println!(
+            "{} {} {}",
+            formatted_index.purple(),
+            formatted_status,
+            todo.text
+        );
     }
 
     // If the removed todo was the last one, show it at the end
