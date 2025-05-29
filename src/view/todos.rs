@@ -17,8 +17,9 @@ pub fn title() {
 pub fn all() -> Result<(), Error> {
     let todos = data::todos::read()?;
 
-    title();
+    title(); // Show the title
 
+    // If the todo list is empty, show Empty message
     if todos.is_empty() {
         println!("📋 Empty");
         return Ok(());
@@ -28,9 +29,11 @@ pub fn all() -> Result<(), Error> {
     let length = todos.len();
 
     for (i, todo) in todos.iter().enumerate() {
+        // Index
         let index = i + 1;
         let formatted_index = utils::format::pad_index(index, length); // Add padding to index less than 10
 
+        // Status
         let status = if todo.done { "✔︎" } else { "☐" };
         let formatted_status = if todo.done {
             status.green()
@@ -38,6 +41,7 @@ pub fn all() -> Result<(), Error> {
             status.blue()
         };
 
+        // Print the todo
         println!(
             "{} {} {}",
             formatted_index.purple(),
@@ -53,19 +57,24 @@ pub fn all() -> Result<(), Error> {
 pub fn added() -> Result<(), Error> {
     let todos = data::todos::read()?;
 
-    title();
+    title(); // Show the title
 
+    // If the todo list is empty, show Empty message
     if todos.is_empty() {
         println!("📋 Empty");
         return Ok(());
     }
 
+    // Check if we have 10 or more todos to determine padding of first 9 todos
     let length = todos.len();
 
+    // Show the todos
     for (i, todo) in todos.iter().enumerate() {
+        // Index
         let index = i + 1;
         let formatted_index = utils::format::pad_index(index, length); // Add padding to index less than 10
 
+        // Status
         let status = if todo.done { "✔︎" } else { "☐" };
         let formatted_status = if todo.done {
             status.green()
@@ -73,9 +82,12 @@ pub fn added() -> Result<(), Error> {
             status.blue()
         };
 
+        // Print the added todo (last one in the list)
         if i == todos.len() - 1 {
             let todo_row = format!("{} + {}", formatted_index, todo.text);
-            println!("{}", todo_row.cyan()); // print last todo
+            println!("{}", todo_row.cyan());
+
+        // Print the rest of the todos
         } else {
             println!(
                 "{} {} {}",
@@ -93,8 +105,9 @@ pub fn added() -> Result<(), Error> {
 pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     let todos = data::todos::read()?;
 
-    title();
+    title(); // Show the title
 
+    // If the todo list is empty, show Empty message
     if todos.is_empty() {
         // Add padding to the removed todo row if needed
         let removed_todo_row = format!("-  {}", removed_todo.text.strikethrough());
@@ -106,9 +119,11 @@ pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
     // Check if we have 10 or more todos to determine padding of first 9 todos
     let length = todos.len();
 
+    // Show the todos
     for (i, todo) in todos.iter().enumerate() {
         let todo_index = i + 1;
         let formatted_index = utils::format::pad_index(todo_index, length); // Add padding to index less than 10
+
         let status = if todo.done { "✔︎" } else { "☐" };
         let formatted_status = if todo.done {
             status.green()
@@ -130,6 +145,7 @@ pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
             println!("{}", removed_todo_row.red()); // show the removed todo
         }
 
+        // Print the current todo
         println!(
             "{} {} {}",
             formatted_index.purple(),
@@ -159,8 +175,9 @@ pub fn removed(index: usize, removed_todo: &Todo) -> Result<(), Error> {
 pub fn toggled(index: usize) -> Result<(), Error> {
     let todos = data::todos::read()?;
 
-    title();
+    title(); // Show the title
 
+    // If the todo list is empty, show Empty message
     if todos.is_empty() {
         println!("📋 Empty");
         return Ok(());
@@ -169,6 +186,7 @@ pub fn toggled(index: usize) -> Result<(), Error> {
     // Check if we have 10 or more todos to determine padding of first 9 todos
     let length = todos.len();
 
+    // Show the todos
     for (i, todo) in todos.iter().enumerate() {
         let todo_index = i + 1;
         let status = if todo.done { "✔︎" } else { "☐" };
