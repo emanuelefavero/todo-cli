@@ -17,10 +17,14 @@ pub fn usage() {
     // Calculate the maximum length of command combinations for proper spacing
     let max_length = calculate_max_command_length(&commands);
 
-    // Print the header
-    print_header();
+    // Print the application introduction, quick start, help info, and usage
+    print_app_intro();
+    print_quick_start();
+    print_help_info();
+    print_usage();
 
     // Print each command with the correct spacing
+    println!("{}", title("Commands:"));
     for cmd in &commands {
         print_command(cmd, max_length);
     }
@@ -28,8 +32,8 @@ pub fn usage() {
 
 // 🔒 PRIVATE ---------------------------------
 
-// Print the help header
-fn print_header() {
+// Print the application introduction
+fn print_app_intro() {
     println!("");
     println!(
         "Snappy and minimal {} list app for your terminal {}",
@@ -37,6 +41,10 @@ fn print_header() {
         "built with Rust".italic()
     );
     println!("");
+}
+
+// Print quick start example
+fn print_quick_start() {
     println!("Add your first todo with:");
     println!(
         "  {} {}",
@@ -44,13 +52,20 @@ fn print_header() {
         "\"your todo text\"".yellow()
     );
     println!("");
+}
+
+// Print where to find more help
+fn print_help_info() {
     println!("For more commands, see:");
     println!("  {} {}", command("todo"), command("help"));
     println!("");
+}
+
+// Print usage information
+fn print_usage() {
     println!("{}", title("Usage:"));
     println!("  {} [COMMAND] [TEXT] [ARG]", command("todo"));
     println!("");
-    println!("{}", title("Commands:"));
 }
 
 // Print a single command with proper formatting
