@@ -36,7 +36,7 @@ pub fn usage() {
 fn print_app_intro() {
     println!("");
     println!(
-        "Snappy and minimal {} list app for your terminal {}",
+        "Blazing-fast terminal {} list app {}",
         command("todo"),
         "built with Rust".italic()
     );
