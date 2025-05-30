@@ -1,67 +1,12 @@
 use colored::Colorize;
-use crate::models::help::HelpCommand;
+use crate::data::help::get_commands;
 
 // 📢 PUBLIC ----------------------------------
 
 // * Show the app usage instructions
 pub fn usage() {
-    // Define all commands
-    let commands = vec![
-        HelpCommand {
-            command: "todo".to_string(),
-            description: "List all todos".to_string(),
-            command_text: None,
-            command_arg: None,
-        },
-        HelpCommand {
-            command: "todo add".to_string(),
-            description: "Add a new todo".to_string(),
-            command_text: Some("\"text\"".to_string()),
-            command_arg: None,
-        },
-        HelpCommand {
-            command: "todo add".to_string(),
-            description: "Add a new todo at specific position".to_string(),
-            command_text: Some("\"text\"".to_string()),
-            command_arg: Some("<n>".to_string()),
-        },
-        HelpCommand {
-            command: "todo rm".to_string(),
-            description: "Remove the first todo".to_string(),
-            command_text: None,
-            command_arg: None,
-        },
-        HelpCommand {
-            command: "todo rm".to_string(),
-            description: "Remove a specific todo by number".to_string(),
-            command_text: None,
-            command_arg: Some("<n>".to_string()),
-        },
-        HelpCommand {
-            command: "todo done".to_string(),
-            description: "Toggle the first todo completion status".to_string(),
-            command_text: None,
-            command_arg: None,
-        },
-        HelpCommand {
-            command: "todo done".to_string(),
-            description: "Toggle todo completion status".to_string(),
-            command_text: None,
-            command_arg: Some("<n>".to_string()),
-        },
-        HelpCommand {
-            command: "todo clear".to_string(),
-            description: "Remove all todos".to_string(),
-            command_text: None,
-            command_arg: None,
-        },
-        HelpCommand {
-            command: "todo help".to_string(),
-            description: "Show this help message".to_string(),
-            command_text: None,
-            command_arg: None,
-        },
-    ];
+    // Get all commands
+    let commands = get_commands();
 
     // Calculate the max length of command components
     let mut max_length = 0;
