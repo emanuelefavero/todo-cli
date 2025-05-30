@@ -1,6 +1,9 @@
 use crate::data::help::get_commands;
 use crate::models::help::HelpCommand;
-use crate::styles::help::{command, command_arg, command_text, title};
+use crate::styles::help::title;
+use crate::utils::format::{
+    calculate_components_length, calculate_max_command_length, format_command_components,
+};
 
 // 📢 PUBLIC ----------------------------------
 
@@ -22,41 +25,6 @@ pub fn usage() {
 }
 
 // 🔒 PRIVATE ---------------------------------
-
-// Iterate through commands and calculate the maximum length of all command combinations (command + text + arg)
-fn calculate_max_command_length(commands: &[HelpCommand]) -> usize {
-    commands
-        .iter()
-        .map(|cmd| {
-            cmd.command.len()
-                + cmd.command_text.as_ref().map_or(0, |t| t.len() + 1)
-                + cmd.command_arg.as_ref().map_or(0, |a| a.len() + 1)
-        })
-        .max() // Find the maximum length
-        .unwrap_or(0) // Default to 0 if no commands are present
-}
-
-// Format a command's components (command, text, arg)
-fn format_command_components(cmd: &HelpCommand) -> (colored::ColoredString, String, String) {
-    let cmd_text = cmd
-        .command_text
-        .as_ref()
-        .map_or(String::new(), |text| format!(" {}", command_text(text)));
-
-    let cmd_arg = cmd
-        .command_arg
-        .as_ref()
-        .map_or(String::new(), |arg| format!(" {}", command_arg(arg)));
-
-    (command(&cmd.command), cmd_text, cmd_arg)
-}
-
-// Calculate the length of a command's components for spacing
-fn calculate_components_length(cmd: &HelpCommand) -> usize {
-    cmd.command.len()
-        + cmd.command_text.as_ref().map_or(0, |t| t.len() + 1)
-        + cmd.command_arg.as_ref().map_or(0, |a| a.len() + 1)
-}
 
 // Print the help header
 fn print_header() {
