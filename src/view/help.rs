@@ -1,6 +1,6 @@
 use crate::data::help::get_commands;
 use crate::models::help::HelpCommand;
-use colored::Colorize;
+use crate::styles::help::{command, command_arg, command_text, title};
 
 // 📢 PUBLIC ----------------------------------
 
@@ -76,21 +76,4 @@ fn print_command(cmd: &HelpCommand, max_length: usize) {
         "  {}{}{}{} {}",
         cmd_formatted, cmd_text, cmd_arg, spaces, cmd.description
     );
-}
-
-// ? Formatting helpers
-fn title(title: &str) -> colored::ColoredString {
-    title.bold().green()
-}
-
-fn command(command: &str) -> colored::ColoredString {
-    command.bold().cyan()
-}
-
-fn command_text(text: &str) -> colored::ColoredString {
-    text.bold().yellow()
-}
-
-fn command_arg(arg: &str) -> colored::ColoredString {
-    arg.cyan()
 }

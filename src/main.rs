@@ -3,6 +3,7 @@ use std::env;
 mod commands;
 mod data;
 mod models;
+mod styles;
 mod utils;
 mod view;
 
