@@ -1,6 +1,6 @@
 use std::io::Error;
 
-use colored::Colorize;
+use colored::{ColoredString, Colorize};
 
 use crate::data;
 use crate::models::todo::Todo;
@@ -174,7 +174,7 @@ fn setup_todos_view() -> Result<Vec<Todo>, Error> {
 }
 
 // ? Helper function to format a todo's index and status
-fn format_todo(index: usize, todo: &Todo, list_length: usize) -> (String, colored::ColoredString) {
+fn format_todo(index: usize, todo: &Todo, list_length: usize) -> (String, ColoredString) {
     // Format index with padding if needed
     let formatted_index = utils::todos::pad_index(index, list_length);
 
@@ -190,7 +190,7 @@ fn format_todo(index: usize, todo: &Todo, list_length: usize) -> (String, colore
 }
 
 // ? Helper function to print a standard todo item
-fn print_todo(index_str: &str, status: &colored::ColoredString, text: &str) {
+fn print_todo(index_str: &str, status: &ColoredString, text: &str) {
     println!("{} {} {}", index_str.purple(), status, text);
 }
 

@@ -1,5 +1,6 @@
 use crate::models::help::HelpCommand;
 use crate::styles::help::{command, command_arg, command_text};
+use colored::ColoredString;
 
 // * Calculate the maximum length of all command combinations for proper spacing
 pub fn calculate_max_command_length(commands: &[HelpCommand]) -> usize {
@@ -11,7 +12,7 @@ pub fn calculate_max_command_length(commands: &[HelpCommand]) -> usize {
 }
 
 // * Format a command's components (command, text, arg)
-pub fn format_command_components(cmd: &HelpCommand) -> (colored::ColoredString, String, String) {
+pub fn format_command_components(cmd: &HelpCommand) -> (ColoredString, String, String) {
     let cmd_text = cmd
         .command_text
         .as_ref()
