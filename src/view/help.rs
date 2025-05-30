@@ -1,6 +1,8 @@
+use colored::Colorize;
+
 use crate::data::help::get_commands;
 use crate::models::help::HelpCommand;
-use crate::styles::help::title;
+use crate::styles::help::{command, title};
 use crate::utils::help::{
     calculate_components_length, calculate_max_command_length, format_command_components,
 };
@@ -28,6 +30,12 @@ pub fn usage() {
 
 // Print the help header
 fn print_header() {
+    println!("");
+    println!(
+        "Snappy and minimal {} list app for your terminal {}",
+        command("todo"),
+        "built with Rust".italic()
+    );
     println!("");
     println!("{}", title("Usage:"));
     println!("");
