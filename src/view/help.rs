@@ -1,12 +1,5 @@
 use colored::Colorize;
-
-// Help command structure
-struct HelpCommand {
-    command: String,
-    description: String,
-    command_text: Option<String>,
-    command_arg: Option<String>,
-}
+use crate::models::help::HelpCommand;
 
 // 📢 PUBLIC ----------------------------------
 
