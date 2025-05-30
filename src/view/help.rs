@@ -37,7 +37,18 @@ fn print_header() {
         "built with Rust".italic()
     );
     println!("");
+    println!("Add your first todo with:");
+    println!(
+        "  {} {}",
+        command("todo add"),
+        "\"your todo text\"".yellow()
+    );
+    println!("");
+    println!("For more commands, see:");
+    println!("  {} {}", command("todo"), command("help"));
+    println!("");
     println!("{}", title("Usage:"));
+    println!("  {} [COMMAND] [TEXT] [ARG]", command("todo"));
     println!("");
     println!("{}", title("Commands:"));
 }
