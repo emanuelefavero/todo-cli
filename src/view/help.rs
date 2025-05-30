@@ -1,7 +1,7 @@
 use crate::data::help::get_commands;
 use crate::models::help::HelpCommand;
 use crate::styles::help::title;
-use crate::utils::format::{
+use crate::utils::help::{
     calculate_components_length, calculate_max_command_length, format_command_components,
 };
 
