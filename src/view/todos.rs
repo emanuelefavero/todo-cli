@@ -176,7 +176,7 @@ fn setup_todos_view() -> Result<Vec<Todo>, Error> {
 // ? Helper function to format a todo's index and status
 fn format_todo(index: usize, todo: &Todo, list_length: usize) -> (String, colored::ColoredString) {
     // Format index with padding if needed
-    let formatted_index = utils::format::pad_index(index, list_length);
+    let formatted_index = utils::todos::pad_index(index, list_length);
 
     // Format status with color
     let status = if todo.done { "✔︎" } else { "☐" };

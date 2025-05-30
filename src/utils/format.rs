@@ -1,17 +1,6 @@
 use crate::models::help::HelpCommand;
 use crate::styles::help::{command, command_arg, command_text};
 
-// * Returns a formatted index string with left padding if needed
-pub fn pad_index(index: usize, length: usize) -> String {
-    let need_padding = length >= 10 && index < 10;
-
-    if need_padding {
-        format!(" {}", index) // Index with left padding
-    } else {
-        index.to_string() // No padding needed
-    }
-}
-
 // * Calculate the maximum length of all command combinations for proper spacing
 pub fn calculate_max_command_length(commands: &[HelpCommand]) -> usize {
     commands
