@@ -1,6 +1,6 @@
 use colored::Colorize;
 use std::env;
-use std::time::{Duration, Instant}; // ? For measuring execution time
+use std::time::Instant; // ? For measuring execution time
 
 mod commands;
 mod data;
@@ -9,17 +9,7 @@ mod styles;
 mod utils;
 mod view;
 
-// TODO put `format_duration` in a utils/time.rs module
-
-fn format_duration(duration: Duration) -> String {
-    if duration.as_millis() > 0 {
-        format!("{}ms", duration.as_millis())
-    } else if duration.as_micros() > 0 {
-        format!("{}µs", duration.as_micros())
-    } else {
-        format!("{}ns", duration.as_nanos())
-    }
-}
+use utils::time::format_duration;
 
 fn main() {
     let start = Instant::now(); // ⏱️ Start the timer
