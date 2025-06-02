@@ -46,7 +46,7 @@ fn print_quick_start() {
 // Print where to find more help
 fn print_help_info() {
     println!("To show this help message, run:");
-    println!("  {} {}", command("todo"), command("help"));
+    println!("  {} {}", command("todo"), command("help"),);
 }
 
 // Print usage information

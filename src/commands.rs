@@ -9,7 +9,7 @@ pub fn handler(args: Vec<String>) {
                 eprintln!("Error: {}", e);
             }
         }
-        2 if args[1] == "help" => {
+        2 if args[1] == "help" || args[1] == "h" || args[1] == "-h" || args[1] == "--help" => {
             view::help::usage();
         }
         2 if args[1] == "clear" || args[1] == "c" => {
