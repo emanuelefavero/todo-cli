@@ -12,17 +12,17 @@ pub fn handler(args: Vec<String>) {
         2 if args[1] == "help" => {
             view::help::usage();
         }
-        2 if args[1] == "clear" => {
+        2 if args[1] == "clear" || args[1] == "c" => {
             if let Err(e) = data::todos::clear() {
                 eprintln!("Error: {}", e);
             }
         }
-        3 if args[1] == "add" => {
+        3 if args[1] == "add" || args[1] == "a" => {
             if let Err(e) = data::todos::add(&args[2], None) {
                 eprintln!("Error: {}", e);
             }
         }
-        4 if args[1] == "add" => match args[3].parse::<usize>() {
+        4 if args[1] == "add" || args[1] == "a" => match args[3].parse::<usize>() {
             Ok(index) => {
                 if let Err(e) = data::todos::add(&args[2], Some(index)) {
                     eprintln!("Error: {}", e);
@@ -32,13 +32,13 @@ pub fn handler(args: Vec<String>) {
                 eprintln!("Invalid index: {}", args[3]);
             }
         },
-        2 if args[1] == "rm" => {
+        2 if args[1] == "rm" || args[1] == "r" => {
             // If no index is provided, remove the first todo
             if let Err(e) = data::todos::remove(1) {
                 eprintln!("Error: {}", e);
             }
         }
-        3 if args[1] == "rm" => match args[2].parse::<usize>() {
+        3 if args[1] == "rm" || args[1] == "r" => match args[2].parse::<usize>() {
             Ok(index) => {
                 if let Err(e) = data::todos::remove(index) {
                     eprintln!("Error: {}", e);
@@ -48,13 +48,13 @@ pub fn handler(args: Vec<String>) {
                 eprintln!("Invalid number: {}", args[2]);
             }
         },
-        2 if args[1] == "done" => {
+        2 if args[1] == "done" || args[1] == "d" => {
             // If no index is provided, toggle the first todo
             if let Err(e) = data::todos::toggle(1) {
                 eprintln!("Error: {}", e);
             }
         }
-        3 if args[1] == "done" => match args[2].parse::<usize>() {
+        3 if args[1] == "done" || args[1] == "d" => match args[2].parse::<usize>() {
             Ok(index) => {
                 if let Err(e) = data::todos::toggle(index) {
                     eprintln!("Error: {}", e);

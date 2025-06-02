@@ -28,6 +28,8 @@ pub fn usage() {
     for cmd in &commands {
         print_command(cmd, max_length);
     }
+
+    // TODO print aliases section in this help usage message
 }
 
 // 🔒 PRIVATE ---------------------------------
