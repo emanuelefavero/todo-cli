@@ -11,31 +11,12 @@ use crate::utils::help::{
 
 // * Show the app usage instructions
 pub fn usage() {
-    // Get all help commands and aliases
-    let commands = get_commands();
-    let aliases = get_aliases();
-
-    // Calculate the maximum length of command combinations for proper spacing
-    let max_length = calculate_max_command_length(&commands);
-
-    // Print the application introduction, quick start, help info, and usage
     print_app_intro();
     print_quick_start();
-    print_help_info();
     print_usage();
-
-    // Print commands
-    println!("{}", title("Commands:"));
-    for cmd in &commands {
-        print_command(cmd, max_length);
-    }
-    println!("");
-
-    // Print aliases
-    println!("{}", title("Aliases:"));
-    for alias in &aliases {
-        print_command(alias, max_length)
-    }
+    print_commands();
+    print_aliases();
+    print_help_info();
 }
 
 // 🔒 PRIVATE ---------------------------------
@@ -64,15 +45,28 @@ fn print_quick_start() {
 
 // Print where to find more help
 fn print_help_info() {
-    println!("For more commands, see:");
+    println!("To show this help message, run:");
     println!("  {} {}", command("todo"), command("help"));
-    println!("");
 }
 
 // Print usage information
 fn print_usage() {
     println!("{}", title("Usage:"));
     println!("  {} [COMMAND] [TEXT] [ARG]", command("todo"));
+    println!("");
+}
+
+// Print commands
+fn print_commands() {
+    let commands = get_commands();
+
+    // Calculate the maximum length of command combinations for proper spacing
+    let max_length = calculate_max_command_length(&commands);
+
+    println!("{}", title("Commands:"));
+    for cmd in &commands {
+        print_command(cmd, max_length);
+    }
     println!("");
 }
 
@@ -86,4 +80,18 @@ fn print_command(cmd: &HelpCommand, max_length: usize) {
         "  {}{}{}{} {}",
         cmd_formatted, cmd_text, cmd_arg, spaces, cmd.description
     );
+}
+
+// Print aliases
+fn print_aliases() {
+    let aliases = get_aliases();
+
+    // Calculate the maximum length of command combinations for proper spacing
+    let max_length = calculate_max_command_length(&aliases);
+
+    println!("{}", title("Aliases:"));
+    for alias in &aliases {
+        print_command(alias, max_length);
+    }
+    println!("");
 }
