@@ -10,9 +10,20 @@ use crate::utils;
 
 // * Show the title of the todo list
 pub fn title() {
+    let duration = data::timer::stop(); // ⏱️ Stop the timer
+
     println!(); // Blank line
-    println!("📝 {}", "Todo List".bold());
-    println!("{}", "────────────────────────────".dimmed());
+    println!(
+        "📝 {}  {}",
+        "Todo List".bold(), // Title
+        format!(
+            "{}{}",
+            "⚡".yellow(),
+            utils::timer::format_duration(duration) // ⏱️ Show the elapsed time
+        )
+        .dimmed()
+    );
+    println!("{}", "─────────────────────".dimmed());
 }
 
 // * Show Empty message
