@@ -1,6 +1,6 @@
 use colored::Colorize;
 
-use crate::data::help::get_commands;
+use crate::data::help::{get_aliases, get_commands};
 use crate::models::help::HelpCommand;
 use crate::styles::help::{command, title};
 use crate::utils::help::{
@@ -11,8 +11,9 @@ use crate::utils::help::{
 
 // * Show the app usage instructions
 pub fn usage() {
-    // Get all help commands
+    // Get all help commands and aliases
     let commands = get_commands();
+    let aliases = get_aliases();
 
     // Calculate the maximum length of command combinations for proper spacing
     let max_length = calculate_max_command_length(&commands);
@@ -23,13 +24,18 @@ pub fn usage() {
     print_help_info();
     print_usage();
 
-    // Print each command with the correct spacing
+    // Print commands
     println!("{}", title("Commands:"));
     for cmd in &commands {
         print_command(cmd, max_length);
     }
+    println!("");
 
-    // TODO print aliases section in this help usage message
+    // Print aliases
+    println!("{}", title("Aliases:"));
+    for alias in &aliases {
+        print_command(alias, max_length)
+    }
 }
 
 // 🔒 PRIVATE ---------------------------------

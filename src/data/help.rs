@@ -59,3 +59,33 @@ pub fn get_commands() -> Vec<HelpCommand> {
         },
     ]
 }
+
+// * Define all help aliases (e.g. `a` for `add`, `r` for `remove`, etc.)
+pub fn get_aliases() -> Vec<HelpCommand> {
+    vec![
+        HelpCommand {
+            command: "todo a".to_string(),
+            description: "Alias for `todo add`".to_string(),
+            command_text: Some("\"text\"".to_string()),
+            command_arg: None,
+        },
+        HelpCommand {
+            command: "todo r".to_string(),
+            description: "Alias for `todo rm`".to_string(),
+            command_text: None,
+            command_arg: None,
+        },
+        HelpCommand {
+            command: "todo d".to_string(),
+            description: "Alias for `todo done`".to_string(),
+            command_text: None,
+            command_arg: None,
+        },
+        HelpCommand {
+            command: "todo c".to_string(),
+            description: "Alias for `todo clear`".to_string(),
+            command_text: None,
+            command_arg: None,
+        },
+    ]
+}
