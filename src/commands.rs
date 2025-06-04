@@ -48,12 +48,13 @@ pub fn handler(args: Vec<String>) {
                     eprintln!("Error: {}", e);
                 }
             }
-            Err(_) => {
-                match data::todos::count() {
-                    Ok(count) => eprintln!("Invalid number: {}. The todo list has {} items.", args[2], count),
-                    Err(_) => eprintln!("Invalid number: {}", args[2]),
-                }
-            }
+            Err(_) => match data::todos::count() {
+                Ok(count) => eprintln!(
+                    "Invalid number: {}. The todo list has {} items.",
+                    args[2], count
+                ),
+                Err(_) => eprintln!("Invalid number: {}", args[2]),
+            },
         },
         2 if args[1] == "done" || args[1] == "d" => {
             // If no index is provided, toggle the first todo
@@ -67,12 +68,13 @@ pub fn handler(args: Vec<String>) {
                     eprintln!("Error: {}", e);
                 }
             }
-            Err(_) => {
-                match data::todos::count() {
-                    Ok(count) => eprintln!("Invalid number: {}. The todo list has {} items.", args[2], count),
-                    Err(_) => eprintln!("Invalid number: {}", args[2]),
-                }
-            }
+            Err(_) => match data::todos::count() {
+                Ok(count) => eprintln!(
+                    "Invalid number: {}. The todo list has {} items.",
+                    args[2], count
+                ),
+                Err(_) => eprintln!("Invalid number: {}", args[2]),
+            },
         },
         4 if args[1] == "replace" || args[1] == "rp" => match args[3].parse::<usize>() {
             Ok(index) => {
@@ -80,12 +82,13 @@ pub fn handler(args: Vec<String>) {
                     eprintln!("Error: {}", e);
                 }
             }
-            Err(_) => {
-                match data::todos::count() {
-                    Ok(count) => eprintln!("Invalid number: {}. The todo list has {} items.", args[3], count),
-                    Err(_) => eprintln!("Invalid number: {}", args[3]),
-                }
-            }
+            Err(_) => match data::todos::count() {
+                Ok(count) => eprintln!(
+                    "Invalid number: {}. The todo list has {} items.",
+                    args[3], count
+                ),
+                Err(_) => eprintln!("Invalid number: {}", args[3]),
+            },
         },
         4 if args[1] == "insert" || args[1] == "i" => match args[3].parse::<usize>() {
             Ok(index) => {

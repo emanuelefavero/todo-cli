@@ -125,7 +125,7 @@ pub fn remove(index: usize) -> Result<(), Error> {
         return Err(Error::new(
             ErrorKind::InvalidInput,
             format!(
-                "Invalid todo number: {}. The todo list has {} items.",
+                "Invalid number: {}. The todo list has {} items.",
                 index,
                 todos.len()
             ),
@@ -156,7 +156,7 @@ pub fn toggle(index: usize) -> Result<(), Error> {
         return Err(Error::new(
             ErrorKind::InvalidInput,
             format!(
-                "Invalid todo number: {}. The todo list has {} items.",
+                "Invalid number: {}. The todo list has {} items.",
                 index,
                 todos.len()
             ),
@@ -189,7 +189,7 @@ pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
         return Err(Error::new(
             ErrorKind::InvalidInput,
             format!(
-                "Invalid todo number: {}. The todo list has {} items.",
+                "Invalid number: {}. The todo list has {} items.",
                 index,
                 todos.len()
             ),
