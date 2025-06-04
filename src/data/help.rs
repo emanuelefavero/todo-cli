@@ -52,6 +52,12 @@ pub fn get_commands() -> Vec<HelpCommand> {
             command_arg: None,
         },
         HelpCommand {
+            command: "todo replace".to_string(),
+            description: "Replace a todo's text".to_string(),
+            command_text: Some("\"text\"".to_string()),
+            command_arg: Some("<n>".to_string()),
+        },
+        HelpCommand {
             command: "todo help".to_string(),
             description: "Show this help message".to_string(),
             command_text: None,
@@ -92,6 +98,12 @@ pub fn get_aliases() -> Vec<HelpCommand> {
             description: "Alias for `todo help`".to_string(),
             command_text: None,
             command_arg: None,
+        },
+        HelpCommand {
+            command: "todo rp".to_string(),
+            description: "Alias for `todo replace \"text\" <n>`".to_string(),
+            command_text: Some("\"text\"".to_string()),
+            command_arg: Some("<n>".to_string()),
         },
     ]
 }

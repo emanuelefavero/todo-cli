@@ -64,14 +64,14 @@ pub fn handler(args: Vec<String>) {
                 eprintln!("Invalid number: {}", args[2]);
             }
         },
-        4 if args[1] == "replace" || args[1] == "rp" => match args[2].parse::<usize>() {
+        4 if args[1] == "replace" || args[1] == "rp" => match args[3].parse::<usize>() {
             Ok(index) => {
-                if let Err(e) = data::todos::replace(index, &args[3]) {
+                if let Err(e) = data::todos::replace(index, &args[2]) {
                     eprintln!("Error: {}", e);
                 }
             }
             Err(_) => {
-                eprintln!("Invalid number: {}", args[2]);
+                eprintln!("Invalid number: {}", args[3]);
             }
         },
         _ => {
