@@ -2,6 +2,7 @@ use std::fs;
 use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
+use crate::errors;
 use crate::models::todo::Todo;
 use crate::view;
 
@@ -76,14 +77,7 @@ pub fn add(text: &str, index: Option<usize>) -> Result<(), Error> {
         Some(idx) => {
             // Check if the index is valid
             if idx == 0 || idx > todos.len() + 1 {
-                return Err(Error::new(
-                    ErrorKind::InvalidInput,
-                    format!(
-                        "Invalid number: {}. The todo list has {} items.",
-                        idx,
-                        todos.len()
-                    ),
-                ));
+                return Err(errors::invalid_number_with_length(idx, &todos));
             }
 
             // Insert the new todo at the specified index
@@ -116,14 +110,7 @@ pub fn remove(index: usize) -> Result<(), Error> {
     }
 
     if index == 0 || index > todos.len() {
-        return Err(Error::new(
-            ErrorKind::InvalidInput,
-            format!(
-                "Invalid number: {}. The todo list has {} items.",
-                index,
-                todos.len()
-            ),
-        ));
+        return Err(errors::invalid_number_with_length(index, &todos));
     }
 
     let todo = todos.remove(index - 1);
@@ -147,14 +134,7 @@ pub fn toggle(index: usize) -> Result<(), Error> {
     }
 
     if index == 0 || index > todos.len() {
-        return Err(Error::new(
-            ErrorKind::InvalidInput,
-            format!(
-                "Invalid number: {}. The todo list has {} items.",
-                index,
-                todos.len()
-            ),
-        ));
+        return Err(errors::invalid_number_with_length(index, &todos));
     }
 
     // Toggle the done status
@@ -180,14 +160,7 @@ pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
     }
 
     if index == 0 || index > todos.len() {
-        return Err(Error::new(
-            ErrorKind::InvalidInput,
-            format!(
-                "Invalid number: {}. The todo list has {} items.",
-                index,
-                todos.len()
-            ),
-        ));
+        return Err(errors::invalid_number_with_length(index, &todos));
     }
 
     // Save the old todo text before replacing
