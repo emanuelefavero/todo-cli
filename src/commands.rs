@@ -74,6 +74,16 @@ pub fn handler(args: Vec<String>) {
                 eprintln!("Invalid number: {}", args[3]);
             }
         },
+        4 if args[1] == "insert" || args[1] == "i" => match args[3].parse::<usize>() {
+            Ok(index) => {
+                if let Err(e) = data::todos::add(&args[2], Some(index)) {
+                    eprintln!("Error: {}", e);
+                }
+            }
+            Err(_) => {
+                eprintln!("Invalid index: {}", args[3]);
+            }
+        },
         _ => {
             eprintln!("Invalid command");
             view::help::usage();
