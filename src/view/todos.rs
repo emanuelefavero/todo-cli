@@ -169,6 +169,39 @@ pub fn toggled(index: usize) -> Result<(), Error> {
     Ok(())
 }
 
+// * Show the replaced todo
+pub fn replaced(index: usize, old_text: &str, new_text: &str) -> Result<(), Error> {
+    let todos = setup_todos_view()?;
+
+    if todos.is_empty() {
+        return Ok(());
+    }
+
+    let length = todos.len();
+
+    // Show the todos
+    for (i, todo) in todos.iter().enumerate() {
+        let todo_index = i + 1;
+        let (formatted_index, formatted_status) = format_todo(todo_index, todo, length);
+
+        // If the current todo is the one that was replaced, show old and new text
+        if todo_index == index {
+            // Format and display the old todo
+            let old_todo_row = format!("{} - {}", formatted_index, old_text.strikethrough());
+            println!("{}", old_todo_row.red());
+
+            // Format and display the new todo
+            let new_todo_row = format!("{} + {}", formatted_index, new_text);
+            println!("{}", new_todo_row.cyan());
+        } else {
+            // Print regular todos
+            print_todo(&formatted_index, &formatted_status, &todo.text);
+        }
+    }
+
+    Ok(())
+}
+
 // 🔒 PRIVATE ---------------------------------
 
 // ? Helper function to setup todos view and handle empty list case

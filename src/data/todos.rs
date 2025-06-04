@@ -156,6 +156,39 @@ pub fn toggle(index: usize) -> Result<(), Error> {
     Ok(())
 }
 
+// * Replace a todo at a specific index with a new todo
+// ? Example: `todo replace 2 "New Todo Text"`
+pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
+    let mut todos = read()?;
+
+    // Check if the todo list is empty first
+    if todos.is_empty() {
+        view::todos::title();
+        view::todos::empty();
+        return Ok(());
+    }
+
+    if index == 0 || index > todos.len() {
+        return Err(Error::new(
+            ErrorKind::InvalidInput,
+            format!("Invalid todo number: {}", index),
+        ));
+    }
+
+    // Save the old todo text before replacing
+    let old_text = todos[index - 1].text.clone();
+
+    // Replace the todo at the specified index
+    todos[index - 1].text = new_text.to_string();
+
+    write(&todos)?;
+
+    // Show the updated list with the replaced todo, passing both old and new text
+    view::todos::replaced(index, &old_text, new_text)?;
+
+    Ok(())
+}
+
 // 🔒 PRIVATE ---------------------------------
 
 // ? Creates the file path for the todo file

@@ -64,6 +64,16 @@ pub fn handler(args: Vec<String>) {
                 eprintln!("Invalid number: {}", args[2]);
             }
         },
+        4 if args[1] == "replace" || args[1] == "rp" => match args[2].parse::<usize>() {
+            Ok(index) => {
+                if let Err(e) = data::todos::replace(index, &args[3]) {
+                    eprintln!("Error: {}", e);
+                }
+            }
+            Err(_) => {
+                eprintln!("Invalid number: {}", args[2]);
+            }
+        },
         _ => {
             eprintln!("Invalid command");
             view::help::usage();
