@@ -2,6 +2,7 @@ use std::env;
 
 mod commands;
 mod data;
+mod errors;
 mod models;
 mod styles;
 mod utils;
