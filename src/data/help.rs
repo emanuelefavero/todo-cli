@@ -53,8 +53,8 @@ pub fn get_commands() -> Vec<HelpCommand> {
         },
         HelpCommand {
             command: "todo replace".to_string(),
-            description: "Replace a todo's text".to_string(),
-            command_text: Some("\"text\"".to_string()),
+            description: "Replace a todo's text with new text".to_string(),
+            command_text: Some("\"new text\"".to_string()),
             command_arg: Some("<n>".to_string()),
         },
         HelpCommand {
@@ -71,8 +71,8 @@ pub fn get_aliases() -> Vec<HelpCommand> {
     vec![
         HelpCommand {
             command: "todo a".to_string(),
-            description: "Alias for `todo add \"text\"`".to_string(),
-            command_text: Some("\"text\"".to_string()),
+            description: "Alias for `todo add`".to_string(),
+            command_text: None,
             command_arg: None,
         },
         HelpCommand {
@@ -94,16 +94,16 @@ pub fn get_aliases() -> Vec<HelpCommand> {
             command_arg: None,
         },
         HelpCommand {
-            command: "todo h".to_string(),
-            description: "Alias for `todo help`".to_string(),
+            command: "todo rp".to_string(),
+            description: "Alias for `todo replace`".to_string(),
             command_text: None,
             command_arg: None,
         },
         HelpCommand {
-            command: "todo rp".to_string(),
-            description: "Alias for `todo replace \"text\" <n>`".to_string(),
-            command_text: Some("\"text\"".to_string()),
-            command_arg: Some("<n>".to_string()),
+            command: "todo h".to_string(),
+            description: "Alias for `todo help`".to_string(),
+            command_text: None,
+            command_arg: None,
         },
     ]
 }
