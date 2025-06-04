@@ -28,9 +28,13 @@ pub fn handler(args: Vec<String>) {
                     eprintln!("Error: {}", e);
                 }
             }
-            Err(_) => {
-                eprintln!("Invalid index: {}", args[3]);
-            }
+            Err(_) => match data::todos::count() {
+                Ok(count) => eprintln!(
+                    "Invalid index: {}. The todo list has {} items.",
+                    args[3], count
+                ),
+                Err(_) => eprintln!("Invalid index: {}", args[3]),
+            },
         },
         2 if args[1] == "rm" || args[1] == "r" => {
             // If no index is provided, remove the first todo
@@ -80,9 +84,13 @@ pub fn handler(args: Vec<String>) {
                     eprintln!("Error: {}", e);
                 }
             }
-            Err(_) => {
-                eprintln!("Invalid index: {}", args[3]);
-            }
+            Err(_) => match data::todos::count() {
+                Ok(count) => eprintln!(
+                    "Invalid index: {}. The todo list has {} items.",
+                    args[3], count
+                ),
+                Err(_) => eprintln!("Invalid index: {}", args[3]),
+            },
         },
         _ => {
             eprintln!("Invalid command");

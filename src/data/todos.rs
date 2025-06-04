@@ -41,6 +41,12 @@ pub fn write(todos: &Vec<Todo>) -> Result<(), Error> {
     Ok(())
 }
 
+// * Count the number of todos in the list
+pub fn count() -> Result<usize, Error> {
+    let todos = read()?;
+    Ok(todos.len())
+}
+
 // * Clears all todos from the list
 pub fn clear() -> Result<(), Error> {
     let todos = read()?;
@@ -78,7 +84,11 @@ pub fn add(text: &str, index: Option<usize>) -> Result<(), Error> {
             if idx == 0 || idx > todos.len() + 1 {
                 return Err(Error::new(
                     ErrorKind::InvalidInput,
-                    format!("Invalid index: {}", idx),
+                    format!(
+                        "Invalid index: {}. The todo list has {} items.",
+                        idx,
+                        todos.len()
+                    ),
                 ));
             }
 
