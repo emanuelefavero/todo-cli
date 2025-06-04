@@ -85,7 +85,7 @@ pub fn add(text: &str, index: Option<usize>) -> Result<(), Error> {
                 return Err(Error::new(
                     ErrorKind::InvalidInput,
                     format!(
-                        "Invalid index: {}. The todo list has {} items.",
+                        "Invalid number: {}. The todo list has {} items.",
                         idx,
                         todos.len()
                     ),
@@ -124,7 +124,11 @@ pub fn remove(index: usize) -> Result<(), Error> {
     if index == 0 || index > todos.len() {
         return Err(Error::new(
             ErrorKind::InvalidInput,
-            format!("Invalid todo number: {}. The todo list has {} items.", index, todos.len()),
+            format!(
+                "Invalid todo number: {}. The todo list has {} items.",
+                index,
+                todos.len()
+            ),
         ));
     }
 
@@ -151,7 +155,11 @@ pub fn toggle(index: usize) -> Result<(), Error> {
     if index == 0 || index > todos.len() {
         return Err(Error::new(
             ErrorKind::InvalidInput,
-            format!("Invalid todo number: {}. The todo list has {} items.", index, todos.len()),
+            format!(
+                "Invalid todo number: {}. The todo list has {} items.",
+                index,
+                todos.len()
+            ),
         ));
     }
 
@@ -180,7 +188,11 @@ pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
     if index == 0 || index > todos.len() {
         return Err(Error::new(
             ErrorKind::InvalidInput,
-            format!("Invalid todo number: {}. The todo list has {} items.", index, todos.len()),
+            format!(
+                "Invalid todo number: {}. The todo list has {} items.",
+                index,
+                todos.len()
+            ),
         ));
     }
 
