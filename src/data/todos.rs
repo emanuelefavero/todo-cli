@@ -156,8 +156,7 @@ pub fn toggle(index: usize) -> Result<(), Error> {
     Ok(())
 }
 
-// * Replace a todo at a specific index with a new todo
-// ? Example: `todo replace 2 "New Todo Text"`
+// * Replaces the text of a todo at a specific index
 pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
     let mut todos = read()?;
 
