@@ -2,8 +2,8 @@ use std::fs;
 use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
-use crate::errors;
 use crate::models::todo::Todo;
+use crate::utils::todos::validate_index;
 use crate::view;
 
 // 📢 PUBLIC ----------------------------------
@@ -76,13 +76,7 @@ pub fn add(text: &str, index: Option<usize>) -> Result<(), Error> {
         // If an index is provided, insert at that position
         Some(idx) => {
             // Check if the index is valid
-            if idx == 0 {
-                return Err(errors::invalid_number_zero());
-            }
-
-            if idx > todos.len() + 1 {
-                return Err(errors::invalid_number_with_length(idx, &todos));
-            }
+            validate_index(idx, &todos)?;
 
             // Insert the new todo at the specified index
             todos.insert(idx - 1, new_todo);
@@ -113,13 +107,7 @@ pub fn remove(index: usize) -> Result<(), Error> {
         return Ok(());
     }
 
-    if index == 0 {
-        return Err(errors::invalid_number_zero());
-    }
-
-    if index > todos.len() {
-        return Err(errors::invalid_number_with_length(index, &todos));
-    }
+    validate_index(index, &todos)?;
 
     let todo = todos.remove(index - 1);
     write(&todos)?;
@@ -141,13 +129,7 @@ pub fn toggle(index: usize) -> Result<(), Error> {
         return Ok(());
     }
 
-    if index == 0 {
-        return Err(errors::invalid_number_zero());
-    }
-
-    if index > todos.len() {
-        return Err(errors::invalid_number_with_length(index, &todos));
-    }
+    validate_index(index, &todos)?;
 
     // Toggle the done status
     todos[index - 1].done = !todos[index - 1].done;
@@ -171,13 +153,7 @@ pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
         return Ok(());
     }
 
-    if index == 0 {
-        return Err(errors::invalid_number_zero());
-    }
-
-    if index > todos.len() {
-        return Err(errors::invalid_number_with_length(index, &todos));
-    }
+    validate_index(index, &todos)?;
 
     // Save the old todo text before replacing
     let old_text = todos[index - 1].text.clone();
