@@ -76,7 +76,11 @@ pub fn add(text: &str, index: Option<usize>) -> Result<(), Error> {
         // If an index is provided, insert at that position
         Some(idx) => {
             // Check if the index is valid
-            if idx == 0 || idx > todos.len() + 1 {
+            if idx == 0 {
+                return Err(errors::invalid_number_zero());
+            }
+
+            if idx > todos.len() + 1 {
                 return Err(errors::invalid_number_with_length(idx, &todos));
             }
 
@@ -109,7 +113,11 @@ pub fn remove(index: usize) -> Result<(), Error> {
         return Ok(());
     }
 
-    if index == 0 || index > todos.len() {
+    if index == 0 {
+        return Err(errors::invalid_number_zero());
+    }
+
+    if index > todos.len() {
         return Err(errors::invalid_number_with_length(index, &todos));
     }
 
@@ -133,7 +141,11 @@ pub fn toggle(index: usize) -> Result<(), Error> {
         return Ok(());
     }
 
-    if index == 0 || index > todos.len() {
+    if index == 0 {
+        return Err(errors::invalid_number_zero());
+    }
+
+    if index > todos.len() {
         return Err(errors::invalid_number_with_length(index, &todos));
     }
 
@@ -159,7 +171,11 @@ pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
         return Ok(());
     }
 
-    if index == 0 || index > todos.len() {
+    if index == 0 {
+        return Err(errors::invalid_number_zero());
+    }
+
+    if index > todos.len() {
         return Err(errors::invalid_number_with_length(index, &todos));
     }
 

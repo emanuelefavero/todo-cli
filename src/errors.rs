@@ -6,6 +6,10 @@ pub fn general(error: Error) {
     eprintln!("{} \n{}", "Error:".dimmed(), error);
 }
 
+pub fn invalid_number(index: &str) {
+    eprintln!("{} {}", "Invalid number:".red(), index.yellow())
+}
+
 pub fn invalid_number_with_length(index: usize, todos: &[Todo]) -> Error {
     Error::new(
         ErrorKind::InvalidInput,
@@ -19,6 +23,14 @@ pub fn invalid_number_with_length(index: usize, todos: &[Todo]) -> Error {
     )
 }
 
-pub fn invalid_number(index: &str) {
-    eprintln!("{} {}", "Invalid number:".red(), index.yellow())
+pub fn invalid_number_zero() -> Error {
+    Error::new(
+        ErrorKind::InvalidInput,
+        format!(
+            "{} {} \nUse 1 for the first todo \n{}",
+            "Invalid number:".red(),
+            "0".yellow(),
+            format!("Run {} to see the list", "`todo`".bold().green()).dimmed()
+        ),
+    )
 }
