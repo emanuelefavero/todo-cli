@@ -51,32 +51,36 @@ cp target/release/todo /usr/local/bin/
 The `todo` command is used to manage your todo list. Below are the available commands and their usage:
 
 ```bash
-todo # List all todos
+todo # Display the todo list
 todo add "Todo text" # Add a new todo
-todo rm # Remove the first todo
+todo rm # Remove first todo
 todo rm <number> # Remove a specific todo by number
-todo done # Toggle the first todo completion status
-todo done <number> # Toggle todo completion status
-todo clear # Remove all todos
-todo help # Show this help message
+todo done # Mark the first todo as done
+todo done <number> # Mark a specific todo as done
+todo replace "New text" <number> # Replace a specific todo with new text
+todo insert "Todo text" <number> # Insert a new todo at a specific position
+todo clear # Clear all todos
+todo help # Display help information
 ```
+
+> **Tip**: Use the `help` command to see a list of all available commands and their descriptions
 
 ### Examples
 
 ```bash
-# Add a new task
+# Add a new todo
 todo add "Buy groceries"
 
-# List all tasks
+# Display the todo list
 todo
 
-# Mark a task as done
-todo done 1 # Mark first task as done
+# Mark first todo as done
+todo done 1
 
-# Remove a specific task
-todo rm 2 # Remove the second task
+# Remove the first todo
+todo rm 1
 
-# Clear all tasks
+# Clear all todos
 todo clear
 ```
 
