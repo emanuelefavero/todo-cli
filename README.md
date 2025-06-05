@@ -8,12 +8,23 @@ Todo CLI is a lightweight, fast, and easy-to-use task manager that allows you to
 
 ## Features
 
-- Add new tasks
-- Remove tasks
-- Mark tasks as done/not done
-- List all tasks with their status
-- Clear all tasks
-- Persistent storage (todos are saved between sessions)
+&nbsp;
+
+| _Feature_                             | _Description_                                      |
+| ------------------------------------- | -------------------------------------------------- |
+| ⚡ **&nbsp;Blazing Fast**             | Built with Rust for speed and efficiency           |
+| 📦 **&nbsp;Small Binary Size**        | Lightweight and minimal                            |
+| 📟 **&nbsp;Terminal-based Interface** | All interactions happen directly in your terminal  |
+| ⚙️ **&nbsp;Dynamic Output**           | See changes in real-time as you run commands       |
+| 🎨 **&nbsp;Colored Output**           | Syntax-highlighted tasks for better readability    |
+| 💾 **&nbsp;Persistent Storage**       | Tasks are saved between sessions automatically     |
+| 📝 **&nbsp;Add Tasks**                | Quickly add new tasks to your todo list            |
+| 📋 **&nbsp;List Tasks**               | View all tasks with clear status indicators        |
+| ✅ **&nbsp;Toggle Task Status**       | Mark tasks as done or undone with a single command |
+| ❌ **&nbsp;Remove Tasks**             | Delete individual tasks with ease                  |
+| ♻️ **&nbsp;Replace a Task**           | Update an existing task with new content           |
+| ➕ **&nbsp;Insert Task at Position**  | Add a task at any specific index                   |
+| 🧹 **&nbsp;Clear All Tasks**          | Wipe your task list in one command                 |
 
 ## Installation
 
