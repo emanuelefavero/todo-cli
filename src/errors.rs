@@ -3,16 +3,18 @@ use colored::Colorize;
 use std::io::{Error, ErrorKind};
 
 pub fn general(error: Error) {
-    eprintln!("{} {}", "Error:".red(), error);
+    eprintln!("{} \n{}", "Error:".dimmed(), error);
 }
 
 pub fn invalid_number_with_length(index: usize, todos: &[Todo]) -> Error {
     Error::new(
         ErrorKind::InvalidInput,
         format!(
-            "Invalid number: {}. The todo list has {} items.",
-            index,
-            todos.len()
+            "{} {} \nThe todo list has {} items \n{}",
+            "Invalid number:".red(),
+            index.to_string().yellow(),
+            todos.len().to_string().cyan(),
+            format!("Run {} to see the list", "`todo`".bold().green()).dimmed()
         ),
     )
 }
