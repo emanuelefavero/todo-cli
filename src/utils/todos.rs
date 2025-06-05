@@ -26,3 +26,17 @@ pub fn validate_index(index: usize, todos: &[Todo]) -> Result<(), Error> {
 
     Ok(())
 }
+
+// * Checks if the index is between 1 and the length of the todo list + 1
+// ? This allows adding a new todo at the end of the list
+pub fn validate_index_on_add(index: usize, todos: &[Todo]) -> Result<(), Error> {
+    if index == 0 {
+        return Err(errors::invalid_number_zero());
+    }
+
+    if index > todos.len() + 1 {
+        return Err(errors::invalid_number_with_length(index, todos));
+    }
+
+    Ok(())
+}

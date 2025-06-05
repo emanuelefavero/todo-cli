@@ -3,7 +3,7 @@ use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
 use crate::models::todo::Todo;
-use crate::utils::todos::validate_index;
+use crate::utils::todos::{validate_index, validate_index_on_add};
 use crate::view;
 
 // 📢 PUBLIC ----------------------------------
@@ -76,7 +76,7 @@ pub fn add(text: &str, index: Option<usize>) -> Result<(), Error> {
         // If an index is provided, insert at that position
         Some(idx) => {
             // Check if the index is valid
-            validate_index(idx, &todos)?;
+            validate_index_on_add(idx, &todos)?;
 
             // Insert the new todo at the specified index
             todos.insert(idx - 1, new_todo);
