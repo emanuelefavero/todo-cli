@@ -29,7 +29,7 @@ pub fn handler(args: Vec<String>) {
                     errors::general(e)
                 }
             }
-            Err(_) => eprintln!("Invalid number: {}", args[3]),
+            Err(_) => errors::invalid_number(&args[3]),
         },
         2 if args[1] == "rm" || args[1] == "r" => {
             // If no index is provided, remove the first todo
@@ -43,7 +43,7 @@ pub fn handler(args: Vec<String>) {
                     errors::general(e)
                 }
             }
-            Err(_) => eprintln!("Invalid number: {}", args[2]),
+            Err(_) => errors::invalid_number(&args[2]),
         },
         2 if args[1] == "done" || args[1] == "d" => {
             // If no index is provided, toggle the first todo
@@ -57,7 +57,7 @@ pub fn handler(args: Vec<String>) {
                     errors::general(e)
                 }
             }
-            Err(_) => eprintln!("Invalid number: {}", args[2]),
+            Err(_) => errors::invalid_number(&args[2]),
         },
         4 if args[1] == "replace" || args[1] == "rp" => match args[3].parse::<usize>() {
             Ok(index) => {
@@ -65,7 +65,7 @@ pub fn handler(args: Vec<String>) {
                     errors::general(e)
                 }
             }
-            Err(_) => eprintln!("Invalid number: {}", args[3]),
+            Err(_) => errors::invalid_number(&args[3]),
         },
         4 if args[1] == "insert" || args[1] == "i" => match args[3].parse::<usize>() {
             Ok(index) => {
@@ -73,7 +73,7 @@ pub fn handler(args: Vec<String>) {
                     errors::general(e)
                 }
             }
-            Err(_) => eprintln!("Invalid number: {}", args[3]),
+            Err(_) => errors::invalid_number(&args[3]),
         },
         _ => {
             eprintln!("Invalid command");

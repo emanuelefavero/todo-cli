@@ -18,3 +18,7 @@ pub fn invalid_number_with_length(index: usize, todos: &[Todo]) -> Error {
         ),
     )
 }
+
+pub fn invalid_number(index: &str) {
+    eprintln!("Invalid number: {}", index)
+}
