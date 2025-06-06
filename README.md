@@ -63,8 +63,6 @@ todo clear # Clear all todos
 todo help # Display help information
 ```
 
-> **Tip**: Use the `help` command to see a list of all available commands and their descriptions
-
 ### Examples
 
 ```bash
@@ -83,6 +81,10 @@ todo rm 1
 # Clear all todos
 todo clear
 ```
+
+> Use the `help` command to see a list of all available commands and their descriptions
+>
+> You can also find aliases for commands in the help output, such as `todo a` for `todo add`.
 
 ## Data Storage
 
