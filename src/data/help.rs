@@ -82,8 +82,8 @@ pub fn get_aliases() -> Vec<HelpCommand> {
             command_arg: None,
         },
         HelpCommand {
-            command: "todo r".to_string(),
-            description: "Alias for `todo rm`".to_string(),
+            command: "todo r, remove".to_string(),
+            description: "Aliases for `todo rm`".to_string(),
             command_text: None,
             command_arg: None,
         },

@@ -2,6 +2,8 @@ use crate::data;
 use crate::errors;
 use crate::view;
 
+// TODO implement "clear screen" functionality in the `setup_todos_view` function and all other commands (e.g. clear command) with `crossterm` library
+
 // * Command line argument handler
 pub fn handler(args: Vec<String>) {
     match args.len() {
@@ -43,7 +45,7 @@ pub fn handler(args: Vec<String>) {
         },
 
         // * rm - removes first todo (e.g. `todo rm`)
-        2 if args[1] == "rm" || args[1] == "r" => {
+        2 if args[1] == "rm" || args[1] == "remove" || args[1] == "r" => {
             // If no index is provided, remove the first todo
             if let Err(e) = data::todos::remove(1) {
                 errors::general(e)
