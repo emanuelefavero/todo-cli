@@ -217,13 +217,10 @@ pub fn edit(index: Option<usize>) -> Result<(), Error> {
         // Display title with exact positioning like in title()
         execute!(stdout, MoveTo(0, 1))?; // Position at top with one blank line
         execute!(stdout, MoveTo(0, 1))?; // Make sure we're at column 0
-        write!(stdout, "📝 {} ", "Todo List - Interactive Edit Mode".bold())?;
+        write!(stdout, "📝 {}", "Todo List ".bold())?;
+        write!(stdout, "{}", "Edit Mode".yellow().italic())?;
         execute!(stdout, MoveTo(0, 2))?; // Next line, column 0
-        write!(
-            stdout,
-            "{}",
-            "─────────────────────────────────────".dimmed()
-        )?;
+        write!(stdout, "{}", "──────────────────────".dimmed())?;
 
         execute!(stdout, MoveTo(0, 3))?; // Next line, column 0
 
@@ -233,7 +230,7 @@ pub fn edit(index: Option<usize>) -> Result<(), Error> {
             let status = if todo.done {
                 "✓".green()
             } else {
-                "○".red()
+                "○".yellow()
             };
 
             execute!(stdout, MoveTo(0, 3 + i as u16))?; // Position at start of line
