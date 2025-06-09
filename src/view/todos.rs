@@ -12,6 +12,8 @@ use crate::utils;
 pub fn title() {
     let duration = data::timer::stop(); // ⏱️ Stop the timer
 
+    utils::terminal::clear(); // Clear the terminal screen
+
     println!(); // Blank line
     println!(
         "📝 {}  {}",

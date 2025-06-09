@@ -6,11 +6,13 @@ use crate::styles::help::{command, title};
 use crate::utils::help::{
     calculate_components_length, calculate_max_command_length, format_command_components,
 };
+use crate::utils::terminal::clear;
 
 // 📢 PUBLIC ----------------------------------
 
 // * Show the app usage instructions
 pub fn usage() {
+    clear(); // Clear the terminal screen
     print_app_intro();
     print_quick_start();
     print_usage();
