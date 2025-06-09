@@ -172,8 +172,17 @@ pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
     Ok(())
 }
 
-// * Edits a todo at a specific index
-pub fn edit(index: usize) -> Result<(), Error> {
+// * Edits a todo at a specific index or allows interactive selection
+pub fn edit(index: Option<usize>) -> Result<(), Error> {
+    use crossterm::{
+        cursor::{Hide, MoveTo, Show},
+        event::{self, Event, KeyCode, KeyEventKind},
+        execute,
+        style::{Color, ResetColor, SetBackgroundColor, SetForegroundColor},
+        terminal::{Clear, ClearType, disable_raw_mode, enable_raw_mode},
+    };
+    use std::io::{Write, stdout};
+
     let mut todos = read()?;
 
     // Check if the todo list is empty first
@@ -183,51 +192,158 @@ pub fn edit(index: usize) -> Result<(), Error> {
         return Ok(());
     }
 
-    validate_index(index, &todos)?;
+    // If no index was provided, start with the first todo selected
+    let mut selected_index = match index {
+        Some(idx) => {
+            validate_index(idx, &todos)?;
+            idx - 1 // Convert to 0-based index for internal use
+        }
+        None => 0, // Start with the first todo selected
+    };
 
-    // Get the current todo text
-    let current_text = &todos[index - 1].text.clone();
+    // Enter raw mode for direct key handling
+    enable_raw_mode()?;
 
-    println!(""); // Empty line
+    let mut stdout = stdout();
 
-    // Use rustyline for input with pre-populated text
-    let mut rl = DefaultEditor::new().map_err(|e| {
-        Error::new(
-            ErrorKind::Other,
-            format!("Failed to initialize editor: {}", e),
-        )
-    })?;
+    // Hide cursor during navigation
+    execute!(stdout, Hide)?;
 
-    let prompt_text = format!(
-        "{} {}{} ",
-        "Edit todo".yellow(),
-        index.to_string().magenta(),
-        ":".yellow()
-    );
+    // Interactive selection loop
+    'outer: loop {
+        // Clear screen and draw the todo list
+        execute!(stdout, Clear(ClearType::All), MoveTo(0, 0))?;
 
-    // Pre-populate the input with the current todo text
-    let new_text = rl
-        .readline_with_initial(&prompt_text, (current_text, ""))
-        .map_err(|e| Error::new(ErrorKind::Other, format!("Failed to read input: {}", e)))?;
+        // Display title with exact positioning like in title()
+        execute!(stdout, MoveTo(0, 1))?; // Position at top with one blank line
+        execute!(stdout, MoveTo(0, 1))?; // Make sure we're at column 0
+        write!(stdout, "📝 {} ", "Todo List - Interactive Edit Mode".bold())?;
+        execute!(stdout, MoveTo(0, 2))?; // Next line, column 0
+        write!(
+            stdout,
+            "{}",
+            "─────────────────────────────────────".dimmed()
+        )?;
+        execute!(stdout, MoveTo(0, 3))?; // Next line, column 0
+        write!(
+            stdout,
+            "{}",
+            "Use ↑/↓ to navigate, Enter to edit, Esc to cancel"
+                .italic()
+                .dimmed()
+        )?;
+        execute!(stdout, MoveTo(0, 4))?; // Blank line before todos, column 0
 
-    let new_text = new_text.trim();
+        // Display todos with the selected one highlighted - enforce positioning at column 0
+        for (i, todo) in todos.iter().enumerate() {
+            let index_str = format!("{}", i + 1);
+            let status = if todo.done {
+                "✓".green()
+            } else {
+                "○".red()
+            };
 
-    // If the user just presses Enter without entering text, keep the original text
-    if new_text.is_empty() {
-        println!("No changes made.");
-        return Ok(());
+            execute!(stdout, MoveTo(0, 6 + i as u16))?; // Position at start of line
+
+            // Highlight selected todo
+            if i == selected_index {
+                execute!(
+                    stdout,
+                    SetBackgroundColor(Color::Blue),
+                    SetForegroundColor(Color::White)
+                )?;
+                write!(stdout, "{} {} {}", index_str.purple(), status, todo.text)?;
+                execute!(stdout, ResetColor)?;
+            } else {
+                write!(stdout, "{} {} {}", index_str.purple(), status, todo.text)?;
+            }
+            writeln!(stdout)?; // End the line after writing the todo
+        }
+
+        stdout.flush()?;
+
+        // Handle key events
+        if let Event::Key(key) = event::read()? {
+            if key.kind == KeyEventKind::Press {
+                match key.code {
+                    KeyCode::Up => {
+                        if selected_index > 0 {
+                            selected_index -= 1;
+                        }
+                    }
+                    KeyCode::Down => {
+                        if selected_index < todos.len() - 1 {
+                            selected_index += 1;
+                        }
+                    }
+                    KeyCode::Enter => {
+                        // Exit raw mode before editing
+                        disable_raw_mode()?;
+                        execute!(stdout, Show)?;
+
+                        // Get current text
+                        let current_text = &todos[selected_index].text.clone();
+
+                        // Clear screen and prepare for text input
+                        execute!(stdout, Clear(ClearType::All), MoveTo(0, 0))?;
+
+                        // Use rustyline for input with pre-populated text
+                        let mut rl = DefaultEditor::new().map_err(|e| {
+                            Error::new(
+                                ErrorKind::Other,
+                                format!("Failed to initialize editor: {}", e),
+                            )
+                        })?;
+
+                        let prompt_text = format!(
+                            "{} {}{} ",
+                            "Edit todo".yellow(),
+                            (selected_index + 1).to_string().magenta(),
+                            ":".yellow()
+                        );
+
+                        // Pre-populate the input with the current todo text
+                        let new_text = rl
+                            .readline_with_initial(&prompt_text, (current_text, ""))
+                            .map_err(|e| {
+                            Error::new(ErrorKind::Other, format!("Failed to read input: {}", e))
+                        })?;
+
+                        let new_text = new_text.trim();
+
+                        // If the user just presses Enter without entering text, keep the original text
+                        if !new_text.is_empty() {
+                            // Save the old text before replacing
+                            let old_text = todos[selected_index].text.clone();
+
+                            // Replace the todo text
+                            todos[selected_index].text = new_text.to_string();
+
+                            // Write changes to file
+                            write(&todos)?;
+
+                            // Show the updated list with the replaced todo
+                            view::todos::replaced(selected_index + 1, &old_text, new_text)?;
+                        } else {
+                            println!("No changes made.");
+                        }
+
+                        // Exit the loop after editing
+                        break 'outer;
+                    }
+                    KeyCode::Esc => {
+                        // Cancel editing
+                        break 'outer;
+                    }
+                    _ => {}
+                }
+            }
+        }
     }
 
-    // Save the old todo text before replacing
-    let old_text = todos[index - 1].text.clone();
-
-    // Replace the todo text
-    todos[index - 1].text = new_text.to_string();
-
-    write(&todos)?;
-
-    // Show the updated list with the edited todo
-    view::todos::replaced(index, &old_text, &new_text.to_string())?;
+    // Ensure raw mode is disabled and cursor is shown before returning
+    disable_raw_mode()?;
+    execute!(stdout, Show)?;
 
     Ok(())
 }

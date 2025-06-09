@@ -59,7 +59,13 @@ pub fn get_commands() -> Vec<HelpCommand> {
         },
         HelpCommand {
             command: "todo edit".to_string(),
-            description: "Edit a todo's text interactively".to_string(),
+            description: "Open interactive editor to navigate and edit todos".to_string(),
+            command_text: None,
+            command_arg: None,
+        },
+        HelpCommand {
+            command: "todo edit".to_string(),
+            description: "Edit a specific todo interactively".to_string(),
             command_text: None,
             command_arg: Some("<n>".to_string()),
         },

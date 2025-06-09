@@ -24,10 +24,17 @@ pub fn handler(args: Vec<String>) {
             }
         }
 
-        // * edit <INDEX> - edits todo at index (e.g. `todo edit 2`)
+        // * edit - edits todos interactively (e.g. `todo edit`)
+        2 if args[1] == "edit" || args[1] == "e" => {
+            if let Err(e) = data::todos::edit(None) {
+                errors::general(e)
+            }
+        }
+
+        // * edit <INDEX> - edits todo at specific index (e.g. `todo edit 2`)
         3 if args[1] == "edit" || args[1] == "e" => match args[2].parse::<usize>() {
             Ok(index) => {
-                if let Err(e) = data::todos::edit(index) {
+                if let Err(e) = data::todos::edit(Some(index)) {
                     errors::general(e)
                 }
             }
