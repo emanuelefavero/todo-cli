@@ -224,15 +224,8 @@ pub fn edit(index: Option<usize>) -> Result<(), Error> {
             "{}",
             "─────────────────────────────────────".dimmed()
         )?;
+
         execute!(stdout, MoveTo(0, 3))?; // Next line, column 0
-        write!(
-            stdout,
-            "{}",
-            "Use ↑/↓ to navigate, Enter to edit, Esc to cancel"
-                .italic()
-                .dimmed()
-        )?;
-        execute!(stdout, MoveTo(0, 4))?; // Blank line before todos, column 0
 
         // Display todos with the selected one highlighted - enforce positioning at column 0
         for (i, todo) in todos.iter().enumerate() {
@@ -243,7 +236,7 @@ pub fn edit(index: Option<usize>) -> Result<(), Error> {
                 "○".red()
             };
 
-            execute!(stdout, MoveTo(0, 6 + i as u16))?; // Position at start of line
+            execute!(stdout, MoveTo(0, 3 + i as u16))?; // Position at start of line
 
             // Highlight selected todo
             if i == selected_index {
@@ -259,6 +252,16 @@ pub fn edit(index: Option<usize>) -> Result<(), Error> {
             }
             writeln!(stdout)?; // End the line after writing the todo
         }
+
+        // Add navigation instructions at the bottom
+        execute!(stdout, MoveTo(0, 3 + todos.len() as u16 + 1))?; // Position after todos with a blank line
+        write!(
+            stdout,
+            "{}",
+            "Use ↑/↓ to navigate, Enter to edit, Esc to cancel"
+                .italic()
+                .dimmed()
+        )?;
 
         stdout.flush()?;
 
