@@ -173,9 +173,6 @@ pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
 
 // * Edits a todo at a specific index
 pub fn edit(index: usize) -> Result<(), Error> {
-    // use rustyline::DefaultEditor;
-    // use std::io::{Error, ErrorKind};
-
     let mut todos = read()?;
 
     // Check if the todo list is empty first
