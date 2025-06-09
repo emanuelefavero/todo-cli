@@ -24,6 +24,16 @@ pub fn handler(args: Vec<String>) {
             }
         }
 
+        // * edit <INDEX> - edits todo at index (e.g. `todo edit 2`)
+        3 if args[1] == "edit" || args[1] == "e" => match args[2].parse::<usize>() {
+            Ok(index) => {
+                if let Err(e) = data::todos::edit(index) {
+                    errors::general(e)
+                }
+            }
+            Err(_) => errors::invalid_number(&args[2]),
+        },
+
         // * add <TEXT> - adds a new todo (e.g. `todo add "Buy milk"`)
         3 if args[1] == "add" || args[1] == "a" => {
             if let Err(e) = data::todos::add(&args[2], None) {

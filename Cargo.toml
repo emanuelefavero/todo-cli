@@ -9,6 +9,7 @@ serde_json = "1.0"
 dirs = "5.0"
 colored = "2"
 crossterm = "0.27"
+rustyline = "12.0"
 
 [profile.release]
 opt-level = 3         # performance optimization (1, 2, 3, "s", "z")

@@ -2,6 +2,8 @@ use std::fs;
 use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
+use rustyline::DefaultEditor;
+
 use crate::models::todo::Todo;
 use crate::utils::todos::{validate_index, validate_index_on_add};
 use crate::view;
@@ -165,6 +167,62 @@ pub fn replace(index: usize, new_text: &str) -> Result<(), Error> {
 
     // Show the updated list with the replaced todo, passing both old and new text
     view::todos::replaced(index, &old_text, new_text)?;
+
+    Ok(())
+}
+
+// * Edits a todo at a specific index
+pub fn edit(index: usize) -> Result<(), Error> {
+    // use rustyline::DefaultEditor;
+    // use std::io::{Error, ErrorKind};
+
+    let mut todos = read()?;
+
+    // Check if the todo list is empty first
+    if todos.is_empty() {
+        view::todos::title();
+        view::todos::empty();
+        return Ok(());
+    }
+
+    validate_index(index, &todos)?;
+
+    // Get the current todo text
+    let current_text = &todos[index - 1].text.clone();
+
+    println!("\nEditing todo {}", index);
+
+    // Use rustyline for input with pre-populated text
+    let mut rl = DefaultEditor::new().map_err(|e| {
+        Error::new(
+            ErrorKind::Other,
+            format!("Failed to initialize editor: {}", e),
+        )
+    })?;
+
+    // Pre-populate the input with the current todo text
+    let new_text = rl
+        .readline_with_initial("Edit todo: ", (current_text, ""))
+        .map_err(|e| Error::new(ErrorKind::Other, format!("Failed to read input: {}", e)))?;
+
+    let new_text = new_text.trim();
+
+    // If the user just presses Enter without entering text, keep the original text
+    if new_text.is_empty() {
+        println!("No changes made.");
+        return Ok(());
+    }
+
+    // Save the old todo text before replacing
+    let old_text = todos[index - 1].text.clone();
+
+    // Replace the todo text
+    todos[index - 1].text = new_text.to_string();
+
+    write(&todos)?;
+
+    // Show the updated list with the edited todo
+    view::todos::replaced(index, &old_text, &new_text.to_string())?;
 
     Ok(())
 }
