@@ -2,6 +2,7 @@ use std::fs;
 use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
+use colored::Colorize;
 use rustyline::DefaultEditor;
 
 use crate::models::todo::Todo;
@@ -187,7 +188,7 @@ pub fn edit(index: usize) -> Result<(), Error> {
     // Get the current todo text
     let current_text = &todos[index - 1].text.clone();
 
-    println!("\nEditing todo {}", index);
+    println!(""); // Empty line
 
     // Use rustyline for input with pre-populated text
     let mut rl = DefaultEditor::new().map_err(|e| {
@@ -197,9 +198,16 @@ pub fn edit(index: usize) -> Result<(), Error> {
         )
     })?;
 
+    let prompt_text = format!(
+        "{} {}{} ",
+        "Edit todo".yellow(),
+        index.to_string().magenta(),
+        ":".yellow()
+    );
+
     // Pre-populate the input with the current todo text
     let new_text = rl
-        .readline_with_initial("Edit todo: ", (current_text, ""))
+        .readline_with_initial(&prompt_text, (current_text, ""))
         .map_err(|e| Error::new(ErrorKind::Other, format!("Failed to read input: {}", e)))?;
 
     let new_text = new_text.trim();
