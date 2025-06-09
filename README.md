@@ -59,6 +59,7 @@ todo done # Mark the first todo as done
 todo done <number> # Mark a specific todo as done
 todo replace "New text" <number> # Replace a specific todo with new text
 todo insert "Todo text" <number> # Insert a new todo at a specific position
+todo edit # Edit a todo (interactive mode)
 todo clear # Clear all todos
 todo help # Display help information
 ```
