@@ -19,7 +19,7 @@ pub fn get_commands() -> Vec<HelpCommand> {
             command: "todo add".to_string(),
             description: "Add a new todo at specific position".to_string(),
             command_text: Some("\"text\"".to_string()),
-            command_arg: Some("<n>".to_string()),
+            command_arg: Some("<number>".to_string()),
         },
         HelpCommand {
             command: "todo rm".to_string(),
@@ -31,7 +31,7 @@ pub fn get_commands() -> Vec<HelpCommand> {
             command: "todo rm".to_string(),
             description: "Remove a specific todo by number".to_string(),
             command_text: None,
-            command_arg: Some("<n>".to_string()),
+            command_arg: Some("<number>".to_string()),
         },
         HelpCommand {
             command: "todo done".to_string(),
@@ -43,7 +43,7 @@ pub fn get_commands() -> Vec<HelpCommand> {
             command: "todo done".to_string(),
             description: "Toggle todo completion status".to_string(),
             command_text: None,
-            command_arg: Some("<n>".to_string()),
+            command_arg: Some("<number>".to_string()),
         },
         HelpCommand {
             command: "todo clear".to_string(),
@@ -55,7 +55,7 @@ pub fn get_commands() -> Vec<HelpCommand> {
             command: "todo replace".to_string(),
             description: "Replace a todo's text with new text".to_string(),
             command_text: Some("\"new text\"".to_string()),
-            command_arg: Some("<n>".to_string()),
+            command_arg: Some("<number>".to_string()),
         },
         HelpCommand {
             command: "todo edit".to_string(),
@@ -67,13 +67,13 @@ pub fn get_commands() -> Vec<HelpCommand> {
             command: "todo edit".to_string(),
             description: "Edit a specific todo interactively".to_string(),
             command_text: None,
-            command_arg: Some("<n>".to_string()),
+            command_arg: Some("<number>".to_string()),
         },
         HelpCommand {
             command: "todo insert".to_string(),
             description: "Insert a new todo at a specific position".to_string(),
             command_text: Some("\"text\"".to_string()),
-            command_arg: Some("<n>".to_string()),
+            command_arg: Some("<number>".to_string()),
         },
         HelpCommand {
             command: "todo help".to_string(),
