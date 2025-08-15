@@ -26,7 +26,18 @@ Todo CLI is a lightweight, fast, and easy-to-use task manager that allows you to
 | ➕ **&nbsp;Insert Task at Position**  | Add a task at any specific index                   |
 | 🧹 **&nbsp;Clear All Tasks**          | Wipe your task list in one command                 |
 
-## Installation
+## Install from Homebrew
+
+- To install Todo CLI using Homebrew, run the following commands:
+
+  ```bash
+  brew tap emanuelefavero/tap
+  brew install todo
+  ```
+
+- Now you can run the `todo` command from anywhere in your terminal.
+
+## Local Installation and Release
 
 ### Prerequisites
 
@@ -44,7 +55,13 @@ cargo build --release
 
 # Optional: Move the binary to a directory in your PATH so you can run it from anywhere
 cp target/release/todo /usr/local/bin/
+
+# Or release it using Homebrew (see below)
 ```
+
+## Releasing the Application
+
+[How to Release Your Own Version of `todo-cli`](RELEASE.md)
 
 ## Usage
 
